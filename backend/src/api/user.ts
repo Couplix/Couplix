@@ -19,4 +19,9 @@ router.post('/', errorCatcher(async (req: Request, res: Response) => {
     res.status(201).json(result);
 }));
 
+router.get('/list', errorCatcher(async (req: Request, res: Response) => {
+    const result = await userService.getUserList();
+    res.status(200).json(result);
+}));
+
 export default router;

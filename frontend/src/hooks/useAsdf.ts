@@ -1,16 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 const useAsdf = () => {
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<any[]>([]);
 
-    const clickHandler = async () => {
-        const result = await axios.get("/api/user/find?id=5");
-        console.log(result.status);
-        setData(result.data.name);
-    }
+    const showList = async () => {
+        const response = await axios.get("/api/user/list");
+        setData(response.data);
+    };
 
-    return { data, clickHandler };
+    const addUser = async () => {
+        const input = inputRef.current;
+        if (input) {
+            const name = input.value;
+            await axios.post("/api/user", { name });
+            showList();
+        }
+    };
+
+    useEffect(() => {
+        showList();
+    }, []);
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    return { data, showList, addUser, inputRef };
 }
 
 export default useAsdf;
