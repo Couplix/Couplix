@@ -10,12 +10,12 @@ async function express_loader(app: Express) {
 
     // API Route
     if(config.NODE_ENV === "production") {
-        app.use(express.static(path.join(__dirname, '../../react/dist')));
+        app.use(express.static(path.join(__dirname, '../../../frontend/dist')));
     }
     app.use("/api",api);
     if(config.NODE_ENV === "production"){
         app.get('*',(_,res)=>{
-            res.sendFile(path.join(__dirname+ '../../../react/dist/index.html'));
+            res.sendFile(path.join(__dirname+ './../../frontend/dist/index.html'));
         });
     }
 }
