@@ -1,11 +1,11 @@
 import {Router, Request, Response, NextFunction} from 'express';
 import test from './test';
-import user from './user';
+import contents from './contents';
 import errorHandler from '../utils/errorHandler';
 
 const app = Router();
 app.use('/', test);
-app.use('/user', user);
+app.use('/user', contents);
 
 app.use(errorHandler);
   

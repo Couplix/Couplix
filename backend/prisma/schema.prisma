@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Netflix {
+  id        Int      @id @default(autoincrement())
+  type      String
+  title     String
+  director  String  @db.Text
+  cast      String  @db.Text
+  country   String
+  release_year String
+  rating      String
+  duration    String
+  listed_in   String  @db.Text
+  description String  @db.Text
+
+  reviews Review[]
+  starRating StarRating[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  content   String
+
+  netflixId Int
+  netflix   Netflix  @relation(fields: [netflixId], references: [id])
+}
+
+model StarRating {
+  id        Int      @id @default(autoincrement())
+  star    Int
+
+  netflixId Int
+  netflix   Netflix  @relation(fields: [netflixId], references: [id])
+}
