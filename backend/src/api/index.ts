@@ -5,7 +5,7 @@ import errorHandler from '../utils/errorHandler';
 
 const app = Router();
 app.use('/', test);
-app.use('/user', contents);
+app.use('/contents', contents);
 
 app.use(errorHandler);
   
