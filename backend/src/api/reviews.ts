@@ -9,4 +9,10 @@ router.get('/:id', errorCatcher(async (req: Request, res: Response) => {
     res.status(200).json(result);
 }));
 
+router.post('/', async (req: Request, res: Response) => {
+  const result = await reviewsService.postReviews(req.body);
+  res.status(201).json(result);
+});
+  
+
 export default router;
