@@ -5,12 +5,14 @@ import categories from './categories'
 import rates from './rates'
 
 import errorHandler from '../utils/errorHandler';
+import reviews from './reviews';
 
 const app = Router();
 app.use('/', test);
 app.use('/contents', contents);
 app.use('/categories',categories);
 app.use('/rates', rates);
+app.use('/reviews', reviews);
 
 app.use(errorHandler);
   
