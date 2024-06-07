@@ -2,6 +2,7 @@ import { useState,useRef } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import useFetchWithRendering from "./useFetchWithRendering";
 import { getCategories,searchConents } from "@/utils/api";
+import { preferState } from "@/utils/types";
 
 type UserData = {
     prefer: number[];
@@ -40,21 +41,23 @@ const useHomePage = () => {
     const setUserData =  currentUser === 1 ? setUser1Data : setUser2Data;
     const currentData = currentUser === 1 ? user1Data : user2Data;
 
-    const addPrefer = (id: number) => () => {
-        setUserData({...currentData, prefer: [...currentData.prefer, id]});
-    };
+    const getPreferState = (id: number) => {
+        if(currentData.prefer.includes(id)) return preferState.prefer;
+        if(currentData.dislike.includes(id)) return preferState.dislike;
+        return preferState.none;
+    }
 
-    const addDislike = (id: number) => () => {
-        setUserData({...currentData, dislike: [...currentData.dislike, id]});
-    };
-
-    const removePrefer = (id: number) => () => {
-        setUserData({...currentData, prefer: currentData.prefer.filter(v => v !== id)});
-    };
-
-    const removeDislike = (id: number) => () => {
-        setUserData({...currentData, dislike: currentData.dislike.filter(v => v !== id)});
-    };
+    const rotatePreferState = (id: number) => () => {
+        const state = getPreferState(id);
+        switch(state) {
+            case preferState.none:
+                return setUserData({...currentData, prefer: [...currentData.prefer, id]});
+            case preferState.prefer:
+                return setUserData({...currentData, prefer: currentData.prefer.filter(v => v !== id), dislike: [...currentData.dislike, id]});
+            case preferState.dislike:
+                return setUserData({...currentData, dislike: currentData.dislike.filter(v => v !== id)});
+        }
+    }
 
     const addLikeContents = ({id,title}: ContentsType) => () => {
         setUserData({...currentData, likeContents: [...currentData.likeContents, {id, title}]});
@@ -87,10 +90,8 @@ const useHomePage = () => {
         loadingUpdate,
         currentUser,
         currentData,
-        addPrefer,
-        addDislike,
-        removePrefer,
-        removeDislike,
+        getPreferState,
+        rotatePreferState,
         addLikeContents,
         removeLikeContents,
         fetchSearch,
