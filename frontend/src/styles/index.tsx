@@ -79,11 +79,11 @@ export const ButtonCss = css`
   font-weight: 600;
 `;
 
-export const ButtonWithHoverAnimation = styled.button`
+export const ButtonWithHoverAnimation = styled.button<{ disabled?: boolean }>`
   ${ButtonCss};
-  ${MainColorBackground};
+  ${props => props.disabled ? GrayBackground : MainColorBackground};
   &:hover {
-    ${ReverseMainColorBackground};
+    ${props => props.disabled ? GrayBackground: ReverseMainColorBackground};
   }
 `;
 

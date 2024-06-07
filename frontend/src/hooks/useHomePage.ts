@@ -60,14 +60,17 @@ const useHomePage = () => {
     }
 
     const addLikeContents = ({id,title}: ContentsType) => () => {
+        if(currentData.likeContents.some(v => v.id === id)) return alert('이미 추가된 컨텐츠입니다.');
         setUserData({...currentData, likeContents: [...currentData.likeContents, {id, title}]});
+        setSearchedContents(null);
     };
 
     const removeLikeContents = (id: number) => () => {
         setUserData({...currentData, likeContents: currentData.likeContents.filter(v => v.id !== id)});
     };
 
-    const fetchSearch = async () => {
+    const fetchSearch = async (e:any) => {
+        e.preventDefault();
         if(!keywordRef.current) return;
         const data = await fetchUpdate(keywordRef.current.value);
         setSearchedContents(data);
@@ -75,12 +78,15 @@ const useHomePage = () => {
 
     const setToUser1 = () => {
         setCurrentUser(1);
+        setSearchedContents(null);
     };
 
     const setToUser2 = () => {
         setCurrentUser(2);
+        setSearchedContents(null);
     };
 
+    const canSubmit = user1Data.prefer.length + user1Data.dislike.length > 0 && user2Data.prefer.length + user2Data.dislike.length > 0;
 
     return {
         loading,
@@ -97,7 +103,8 @@ const useHomePage = () => {
         fetchSearch,
         setToUser1,
         setToUser2,
-        keywordRef
+        keywordRef,
+        canSubmit,
     };
 }
 

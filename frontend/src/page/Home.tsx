@@ -1,9 +1,10 @@
 import useHomePage from "@/hooks/useHomePage";
-import { MainContainer, Input } from "@/styles";
+import { MainContainer, Input, ButtonWithHoverAnimation } from "@/styles";
 import { SelectUserContainer,SelectUser,
     DescriptionContainer, BoldSpan,
-    CategoriesContainer, Category,
-    SearchContainer, SearchButton
+    CategoriesContainer, Category,SelectedContents,
+    SearchContainer, SearchButton,
+    ContentsListContainer, ContentsList
  } from "@/styles/Home.style";
 
 const Home = () => {
@@ -23,6 +24,7 @@ const Home = () => {
         setToUser1,
         setToUser2,
         keywordRef,
+        canSubmit
     } = useHomePage();
 
     return (
@@ -46,6 +48,9 @@ const Home = () => {
                     </Category>
                 ))}
             </CategoriesContainer>
+            <br/>
+            <br/>
+            <br/>
             <DescriptionContainer>
                 <BoldSpan>재밌게 시청했던 콘텐츠를 골라주세요.</BoldSpan>
                 <br/>
@@ -53,33 +58,39 @@ const Home = () => {
                 <span>콘텐츠를 추천하는데 참고할 것입니다.</span>
             </DescriptionContainer>
             <CategoriesContainer>
+                {currentData.likeContents.length === 0 && <SelectedContents>검색을 통해 콘텐츠를 추가해주세요.</SelectedContents>}
                 {currentData.likeContents.map(v => (
-                    <div key={v.id}>
+                    <SelectedContents key={v.id}>
                         {v.title}
-                        <button onClick={removeLikeContents(v.id)}>삭제</button>
-                    </div>
+                        <span className="material-icons" onClick={removeLikeContents(v.id)} style={{color:"var(--main-color)",fontSize:"1rem"}}>cancel</span>
+                    </SelectedContents>
                 ))}
             </CategoriesContainer>
             <SearchContainer>
                 <Input type="text" ref={keywordRef} />
                 <SearchButton onClick={fetchSearch}>검색</SearchButton>
             </SearchContainer>
-            <SearchContainer>
+            <ContentsListContainer>
                 {loadingUpdate && <div>검색 중...</div>}
                 {!loadingUpdate && searchedContents === null && <div> 재밌게 시청했던 콘텐츠를 검색해보세요.</div>}
                 {searchedContents && searchedContents.map(v => (
-                    <div key={v.id}>
+                    <ContentsList key={v.id} onClick={addLikeContents(v)}>
                         <div>
-                            <span>{v.title}</span>
+                            <BoldSpan>{v.title}</BoldSpan>
+                            <span> ({v.releaseYear})</span>
+                            <br/>
                             <span>{v.category}</span>
-                            <span>{v.releaseYear}</span>
-                            <span>{v.rating}</span>
                         </div>
-                        <button onClick={addLikeContents(v)}>추가</button>
-                    </div>
+                        <span className="material-icons" style={{color:"#33cc88"}}>add_circle</span> 
+                    </ContentsList>
                 ))}
                 {error && <div>{error.message}</div>}
-            </SearchContainer>
+            </ContentsListContainer>
+            {canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:300,margin:"50px auto"}}>추천받기</ButtonWithHoverAnimation>}
+            {!canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:500,margin:"50px auto",flexDirection:"column"}} disabled>
+                <span>추천받기</span>
+                <span style={{fontWeight:"400"}}>각 사용자 별로 최소 1개 이상의 카테고리 선호도를 선택해주세요.</span>
+                </ButtonWithHoverAnimation>}
         </MainContainer>
     );
 };

@@ -56,14 +56,23 @@ export const Category = styled.div<{$preferState: preferState}>`
 
     &::before {
         content: ${props => props.$preferState === preferState.prefer ? '"favorite"' : props.$preferState === preferState.dislike ? '"highlight_off"' : '""'};
-        color: ${props => props.$preferState === preferState.prefer ? '#ff3399' : props.$preferState === preferState.dislike ? '#f00' : '#000'};
+        color: ${props => props.$preferState === preferState.prefer ? '#ff3399' : props.$preferState === preferState.dislike ? '#f00' : '#ccc'};
         font-family: 'Material Icons';
         display: inline-block;
         width: 20px;
     }
 `;
 
-export const SearchContainer = styled.div`
+export const SelectedContents = styled.div`
+    ${FlexRowSpaceBetween};
+    border-radius: 5px;
+    gap: 5px;
+    background-color: #fff;
+    color: #000;
+    padding: 5px 5px 5px 10px;
+`;
+
+export const SearchContainer = styled.form`
     ${FlexRowCenter}
     margin-bottom: 10px;
 `;
@@ -72,4 +81,24 @@ export const SearchButton = styled.button`
     ${ButtonCss}
     ${MainColorBackground}
     padding: 8px 10px;
+`;
+
+export const ContentsListContainer = styled.div`
+    ${FlexColumnCenter}
+    margin-bottom: 10px;
+`;
+
+export const ContentsList = styled.div`
+    ${FlexRowSpaceBetween};
+    ${clickable};
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    width: 100%;
+    max-width: 700px;
+    &:nth-child(odd) {
+        background-color: lightgray;
+    }
 `;
