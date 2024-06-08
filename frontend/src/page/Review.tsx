@@ -2,6 +2,7 @@ import useReviewPage from "@/hooks/useReviewPage";
 import { Input } from "@/styles";
 import { SearchContainer, SearchButton, ContentsListContainer, 
     ContentsList, BoldSpan, DescriptionContainer } from "@/styles/Home.style";
+import { ContentContainer, ContentDescriptionContainer } from "@/styles/Review.style";
 
 const Review = () => {
     const {
@@ -9,8 +10,14 @@ const Review = () => {
         searchedContents,
         loadingUpdate,
         fetchSearch,
-        keywordRef
+        keywordRef,
+        content,
+        fetchContent
     } = useReviewPage();
+
+    const handleContentClick = (contentId: number) => {
+        fetchContent(contentId);
+    };
 
     return (
         <div>
@@ -32,19 +39,41 @@ const Review = () => {
                 {loadingUpdate && <div>검색 중...</div>}
                 {!loadingUpdate && searchedContents === null}
                 {searchedContents && searchedContents.map(v => (
-                    <ContentsList key={v.id}>
+                    <ContentsList key={v.id} onClick={() => handleContentClick(v.id)}>
                         <div>
                             <BoldSpan>{v.title}</BoldSpan>
                             <span> ({v.releaseYear})</span>
                             <br/>
-                            <span>{v.category}</span>
-                            <br/>
-                            <span>시청 등급: {v.rating}</span>
+                            <span>{v.categories.map((c, index) => (
+                                index === v.categories.length - 1 ? c : c + ", "
+                            ))}</span>
                         </div>
                     </ContentsList>
                 ))}
                 {error && <div>{error.message}</div>}
             </ContentsListContainer>
+            <ContentContainer>
+            {content?.title ? (
+                <div>
+                    <BoldSpan>{content.title}</BoldSpan>
+                    <br/>
+                    <br/>
+                    <ContentDescriptionContainer>
+                        <span>감독: {content.director.join(", ")}</span>
+                        <br/>
+                        <span>출연: {content.cast.join(", ")}</span>
+                        <br/>
+                        <span>개봉연도: {content.releaseYear}</span>
+                        <br/>
+                        <br/>
+                        <span>{content.description}</span>
+                    </ContentDescriptionContainer>
+                </div>
+            ) : (
+                null
+            )}
+            </ContentContainer>
+
         </div>
     )
 }

@@ -79,7 +79,9 @@ const Home = () => {
                             <BoldSpan>{v.title}</BoldSpan>
                             <span> ({v.releaseYear})</span>
                             <br/>
-                            <span>{v.category}</span>
+                            <span>{v.categories.map((c, index) => (
+                                index === v.categories.length - 1 ? c : c + ", "
+                            ))}</span>
                         </div>
                         <span className="material-icons" style={{color:"#33cc88"}}>add_circle</span> 
                     </ContentsList>

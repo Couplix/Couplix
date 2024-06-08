@@ -16,9 +16,16 @@ type UserData = {
 type ContentsType = {
     id: number;
     title: string;
-    category: string;
+    director: string[];
+    cast: string[];
+    country: string;
     releaseYear: number;
-    rating: number;
+    rating: string;
+    duration: string;
+    categories: string[];
+    description: string;
+    starRating: number;
+    reviews: string[];
 };
 
 const useHomePage = () => {
