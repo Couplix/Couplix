@@ -1,7 +1,7 @@
 import { useState,useRef } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import useFetchWithRendering from "./useFetchWithRendering";
-import { getCategories,searchConents } from "@/utils/api";
+import { getCategories,searchContents } from "@/utils/api";
 import { preferState } from "@/utils/types";
 
 type UserData = {
@@ -35,7 +35,7 @@ const useHomePage = () => {
     });
     const [loading, categories, error] = useFetchWithRendering(getCategories);
     const [searchedContents, setSearchedContents] = useState<ContentsType[]|null>(null);
-    const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchConents);
+    const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchContents);
     const keywordRef = useRef<HTMLInputElement>(null);
 
     const setUserData =  currentUser === 1 ? setUser1Data : setUser2Data;
