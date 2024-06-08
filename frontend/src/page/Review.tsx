@@ -1,8 +1,10 @@
 import useReviewPage from "@/hooks/useReviewPage";
-import { Input } from "@/styles";
+import { Input, MainContainer } from "@/styles";
 import { SearchContainer, SearchButton, ContentsListContainer, 
     ContentsList, BoldSpan, DescriptionContainer } from "@/styles/Home.style";
-import { ContentContainer, ContentDescriptionContainer } from "@/styles/Review.style";
+import { ContentContainer, ContentDescriptionContainer, RightAlignedContainer, StarRatingButton, StarRatingContainer } from "@/styles/Review.style";
+import StarRating from "@/components/StarRating";
+import StarRatingInput from "@/components/StarRatingInput";
 
 const Review = () => {
     const {
@@ -20,7 +22,7 @@ const Review = () => {
     };
 
     return (
-        <div>
+        <MainContainer>
             <DescriptionContainer>
                 <br/>
                 <br/>
@@ -55,7 +57,11 @@ const Review = () => {
             <ContentContainer>
             {content?.title ? (
                 <div>
-                    <BoldSpan>{content.title}</BoldSpan>
+                    <RightAlignedContainer>
+                        <BoldSpan>{content.title}</BoldSpan>
+                            <StarRating starRating={content.starRating}/>
+                        <BoldSpan>{content.starRating}</BoldSpan>
+                    </RightAlignedContainer>
                     <br/>
                     <br/>
                     <ContentDescriptionContainer>
@@ -68,13 +74,18 @@ const Review = () => {
                         <br/>
                         <span>{content.description}</span>
                     </ContentDescriptionContainer>
+                    <br/>
+                    <br/>
+                    <StarRatingContainer>
+                        <StarRatingInput />
+                        <StarRatingButton>평점 작성</StarRatingButton>
+                    </StarRatingContainer>
                 </div>
             ) : (
                 null
             )}
             </ContentContainer>
-
-        </div>
+        </MainContainer>
     )
 }
 
