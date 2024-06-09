@@ -1,4 +1,4 @@
-type ContentsType = {
+export type ContentsType = {
   id: number;
   title: string;
   director: string[];
@@ -9,11 +9,14 @@ type ContentsType = {
   duration: string;
   categories: string[];
   description: string;
-  starRating: number;
-  reviews: string[];
+  starRating: number[];
+  reviews: {
+    id: number,
+    text: string
+  }[];
 };
 
-const contents: ContentsType[] = [
+export let contents: ContentsType[] = [
   {
     id: 1,
     title: "어벤져스",
@@ -21,12 +24,12 @@ const contents: ContentsType[] = [
     cast: ["로버트 다우니 주니어", "크리스 에반스", "마크 러팔로", "크리스 헴스워스", "스칼렛 요한슨", "제레미 레너", "톰 히들스턴", "새뮤얼 L. 잭슨"],
     releaseYear: 2012,
     description: "ASSEMBLE! 최강의 슈퍼히어로들이 모였다!지구의 운명을 건 거대한 전쟁이 시작된다!지구의 안보가 위협당하는 위기의 상황에서 슈퍼히어로들을 불러모아 세상을 구하는, 일명 [어벤져스] 작전. 에너지원 ‘큐브’를 이용한 적의 등장으로 인류가 위험에 처하자 국제평화유지기구인 쉴드 (S.H.I.E.L.D)의 국장 닉 퓨리(사무엘 L.잭슨)는 [어벤져스] 작전을 위해 전 세계에 흩어져 있던 슈퍼히어로들을 찾아나선다. 아이언맨(로버트 다우니 주니어)부터 토르(크리스 헴스워스), 헐크(마크 러팔로), 캡틴 아메리카(크리스 에반스)는 물론, 쉴드의 요원인 블랙 위도우(스칼렛 요한슨), 호크 아이(제레미 레너)까지, 최고의 슈퍼히어로들이 [어벤져스]의 멤버로 모이게 되지만, 각기 개성이 강한 이들의 만남은 예상치 못한 방향으로 흘러가는데… 지구의 운명을 건 거대한 전쟁 앞에 [어벤져스] 작전은 성공할 수 있을까?",
-    starRating: 3.5,
+    starRating: [3.5, 4.5],
     country: "미국",
     rating: "12세 이상",
     duration: "143분",
     categories: ["슈퍼히어로", "SF", "액션", "어드벤처", "판타지"],
-    reviews: ["재밌다", "재미있네요"]
+    reviews: [{id: 1, text: "재밌다"}, {id: 2, text: "재밌네요"}]
   },
   {
     id: 2,
@@ -35,12 +38,12 @@ const contents: ContentsType[] = [
     cast: ["로버트 다우니 주니어", "크리스 헴스워스", "마크 러팔로", "크리스 에반스", "스칼렛 요한슨", "제러미 레너", "제임스 스페이더", "새뮤얼 L. 잭슨"],
     releaseYear: 2015,
     description: "쉴드의 숙적 히드라는 연구를 통해 새로운 능력자 막시모프 남매를 탄생시키고, 히드라의 기지를 공격하는 도중 토니 스타크는 완다 막시모프의 초능력으로 인해 자신이 가장 두려워하는 미래를 보게 된다. 이에 '뉴욕전쟁' 때와 같은 사태가 벌어지지 않도록 스타크는 배너 박사와 함께 지구를 지킬 최강의 인공지능 울트론을 탄생시키게 되지만, 울트론은 예상과 다르게 지배를 벗어나 폭주하기 시작하는데...",
-    starRating: 2.8,
+    starRating: [2.8],
     country: "미국",
     rating: "12세 이상",
     duration: "141분",
     categories: ["슈퍼히어로", "SF", "액션", "어드벤처"],
-    reviews: ["재밌다", "재미있네요"]
+    reviews: [{id: 1, text: "재밌다"}, {id: 2, text: "재밌네요"}]
   },
   {
     id: 3,
@@ -52,12 +55,12 @@ const contents: ContentsType[] = [
     "조시 브롤린", "크리스 프랫"],
     releaseYear: 2018,
     description: "가디언즈 오브 갤럭시 멤버들과 와칸다 군대, 닥터 스트레인지 등 새로운 팀들과 함께 환상의 대연합을 이룬 어벤져스, 역대 최강 빌런 타노스에 맞서 전 우주에 운명이 걸린 인피니티 스톤을 향한 무한 대결이 펼쳐진다! 마블의 클라이맥스를 목격하라!",
-    starRating: 4.5,
+    starRating: [4.5],
     country: "미국",
     rating: "12세 이상",
     duration: "149분",
     categories: ["슈퍼히어로", "SF", "액션", "어드벤처", "판타지", "드라마"],
-    reviews: ["재밌다", "재미있네요"]
+    reviews: [{id: 1, text: "재밌다"}, {id: 2, text: "재밌네요"}]
   }
 ]
 

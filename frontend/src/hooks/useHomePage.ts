@@ -1,7 +1,7 @@
 import { useState,useRef } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import useFetchWithRendering from "./useFetchWithRendering";
-import { getCategories,searchContents } from "@/utils/api";
+import { ContentsType, getCategories,searchContents } from "@/utils/api";
 import { preferState } from "@/utils/types";
 
 type UserData = {
@@ -11,21 +11,6 @@ type UserData = {
         id: number;
         title: string;
     }[];
-};
-
-type ContentsType = {
-    id: number;
-    title: string;
-    director: string[];
-    cast: string[];
-    country: string;
-    releaseYear: number;
-    rating: string;
-    duration: string;
-    categories: string[];
-    description: string;
-    starRating: number;
-    reviews: string[];
 };
 
 const useHomePage = () => {

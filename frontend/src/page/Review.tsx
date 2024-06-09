@@ -2,7 +2,7 @@ import useReviewPage from "@/hooks/useReviewPage";
 import { Input, MainContainer } from "@/styles";
 import { SearchContainer, SearchButton, ContentsListContainer, 
     ContentsList, BoldSpan, DescriptionContainer } from "@/styles/Home.style";
-import { ContentContainer, ContentDescriptionContainer, RightAlignedContainer, StarRatingButton, StarRatingContainer } from "@/styles/Review.style";
+import { ContentContainer, ContentDescriptionContainer, ReviewButton, ReviewContainer, ReviewId, ReviewInput, ReviewInputContainer, ReviewText, Reviews, RightAlignedContainer, StarRatingButton, StarRatingContainer } from "@/styles/Review.style";
 import StarRating from "@/components/StarRating";
 import StarRatingInput from "@/components/StarRatingInput";
 
@@ -14,12 +14,14 @@ const Review = () => {
         fetchSearch,
         keywordRef,
         content,
-        fetchContent
+        addStarRating,
+        handleContentClick,
+        calculateAverageRating,
+        handleRatingChange,
+        inputText,
+        handleInputChange,
+        submitReview
     } = useReviewPage();
-
-    const handleContentClick = (contentId: number) => {
-        fetchContent(contentId);
-    };
 
     return (
         <MainContainer>
@@ -59,8 +61,8 @@ const Review = () => {
                 <div>
                     <RightAlignedContainer>
                         <BoldSpan>{content.title}</BoldSpan>
-                            <StarRating starRating={content.starRating}/>
-                        <BoldSpan>{content.starRating}</BoldSpan>
+                            <StarRating starRating={calculateAverageRating(content.starRating)}/>
+                        <BoldSpan>{calculateAverageRating(content.starRating)}</BoldSpan>
                     </RightAlignedContainer>
                     <br/>
                     <br/>
@@ -77,9 +79,40 @@ const Review = () => {
                     <br/>
                     <br/>
                     <StarRatingContainer>
-                        <StarRatingInput />
-                        <StarRatingButton>평점 작성</StarRatingButton>
+                        <StarRatingInput onRatingChange={handleRatingChange} />
+                        <StarRatingButton onClick={addStarRating}>평점 작성</StarRatingButton>
                     </StarRatingContainer>
+                    <ReviewContainer>
+                        <DescriptionContainer>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <BoldSpan>콘텐츠에 대한 리뷰를 작성해 주세요.</BoldSpan>
+                            <br/>
+                            <span>콘텐츠를 시청하려고 하는 사용자가 시청 전에 확인할 수 있습니다.</span>
+                            <span>다른 사용자를 위해 영화를 평가해 주세요.</span>
+                            <br/>
+                        </DescriptionContainer>
+                        <ReviewInputContainer>
+                            <ReviewInput
+                                maxLength={500}
+                                placeholder="텍스트를 입력하세요. (500자 이하)"
+                                value={inputText}
+                                onChange={handleInputChange}
+                            />
+                            <ReviewButton onClick={submitReview}>작성하기</ReviewButton>
+                        </ReviewInputContainer>
+                        <br />
+                        <br />
+                        <br />
+                        {content.reviews.map(review => (
+                            <Reviews key={review.id}>
+                                <ReviewId>{review.id}:</ReviewId>
+                                <ReviewText>{review.text}</ReviewText>
+                                <br />
+                            </Reviews>
+                        ))}
+                    </ReviewContainer>
                 </div>
             ) : (
                 null

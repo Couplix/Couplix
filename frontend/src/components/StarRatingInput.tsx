@@ -9,7 +9,7 @@ const StyledStar = styled.img`
     cursor: pointer;
 `;
 
-const StarRatingInput = ({ maxStars = 5 }) => {
+const StarRatingInput = ({ maxStars = 5 , onRatingChange }) => {
     const [currentRating, setCurrentRating] = useState(0);
     const [hoveredRating, setHoveredRating] = useState(0);
 
@@ -18,6 +18,7 @@ const StarRatingInput = ({ maxStars = 5 }) => {
     const handleClick = (index) => {
         const rating = index + 1;
         setCurrentRating(rating);
+        onRatingChange(rating);
     };
 
     return (
