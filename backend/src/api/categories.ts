@@ -1,15 +1,12 @@
 import { Router, Request, Response } from 'express';
-import { categories } from '../data';
+import { getCategories } from '../services/categories.service';
+import errorCatcher from '../utils/errorCatcher';
 
 const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-  const formattedCategories = categories.map((category, index) => ({
-    id: index + 1,
-    name: category
-  }));
-  
-  res.json(formattedCategories);
-});
+router.get('/', errorCatcher(async (req: Request, res: Response) => {
+    const categories = await getCategories();
+    res.status(200).json(categories);
+}));
 
 export default router;
