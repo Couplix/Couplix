@@ -6,6 +6,7 @@ import { SelectUserContainer,SelectUser,
     SearchContainer, SearchButton,
     ContentsListContainer, ContentsList
  } from "@/styles/Home.style";
+ import { Link } from "react-router-dom";
 
 const Home = () => {
     const {
@@ -24,7 +25,10 @@ const Home = () => {
         setToUser1,
         setToUser2,
         keywordRef,
-        canSubmit
+        canSubmit,
+        clickRecommend,
+        loadingRecommend,
+        recommendContents
     } = useHomePage();
 
     return (
@@ -79,9 +83,7 @@ const Home = () => {
                             <BoldSpan>{v.title}</BoldSpan>
                             <span> ({v.release_year})</span>
                             <br/>
-                            <span>{v.categories.map((c, index) => (
-                                index === v.categories.length - 1 ? c : c + ", "
-                            ))}</span>
+                            <span>{v.categories}</span>
                         </div>
                         <span className="material-icons" style={{color:"#33cc88"}}>add_circle</span> 
                     </ContentsList>
@@ -90,9 +92,23 @@ const Home = () => {
             </ContentsListContainer>
             {canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:300,margin:"50px auto"}}>추천받기</ButtonWithHoverAnimation>}
             {!canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:500,margin:"50px auto",flexDirection:"column"}} disabled>
-                <span>추천받기</span>
+                <span onClick={clickRecommend}>추천받기</span>
                 <span style={{fontWeight:"400"}}>각 사용자 별로 최소 1개 이상의 카테고리 선호도를 선택해주세요.</span>
                 </ButtonWithHoverAnimation>}
+            {loadingRecommend && <div>추천 중...</div>}
+            <ContentsListContainer>
+                {recommendContents && recommendContents.map(v => (
+                    <ContentsList key={v.id}>
+                        <div>
+                            <BoldSpan>{v.title}</BoldSpan>
+                            <span> ({v.release_year})</span>
+                            <br/>
+                            <span>{v.categories}</span>
+                        </div>
+                        <Link className="material-icons" to={`/review/${v.id}`}>add_circle</Link>
+                    </ContentsList>
+                ))}
+            </ContentsListContainer>
         </MainContainer>
     );
 };

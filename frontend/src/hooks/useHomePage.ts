@@ -1,10 +1,10 @@
 import { useState,useRef } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import useFetchWithRendering from "./useFetchWithRendering";
-import { ContentsType, getCategories,searchContents } from "@/utils/api";
+import { ContentsType, getCategories,searchContents, getRecommendContents } from "@/utils/api";
 import { preferState } from "@/utils/types";
 
-type UserData = {
+export type UserData = {
     prefer: number[];
     dislike: number[];
     likeContents: {
@@ -28,6 +28,8 @@ const useHomePage = () => {
     const [loading, categories, error] = useFetchWithRendering(getCategories);
     const [searchedContents, setSearchedContents] = useState<ContentsType[]|null>(null);
     const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchContents);
+    const [loadingRecommend, fetchRecommend] = useFetchUpdate(getRecommendContents);
+    const [recommendContents, setRecommendContents] = useState<ContentsType[]|null>(null);
     const keywordRef = useRef<HTMLInputElement>(null);
 
     const setUserData =  currentUser === 1 ? setUser1Data : setUser2Data;
@@ -80,6 +82,11 @@ const useHomePage = () => {
 
     const canSubmit = user1Data.prefer.length + user1Data.dislike.length > 0 && user2Data.prefer.length + user2Data.dislike.length > 0;
 
+    const clickRecommend = async () => {
+        const data = await fetchRecommend(user1Data, user2Data);
+        setRecommendContents(data);
+    }
+
     return {
         loading,
         categories,
@@ -97,6 +104,9 @@ const useHomePage = () => {
         setToUser2,
         keywordRef,
         canSubmit,
+        clickRecommend,
+        loadingRecommend,
+        recommendContents
     };
 }
 

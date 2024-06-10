@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import { ContentsType, getContentById, searchContents, fetchAddReview, fetchAddStarRating } from "@/utils/api";
+import { useParams, useNavigate } from "react-router-dom";
 
 const useReviewPage = () => {
     const [content, setContent] = useState<ContentsType|null>(null);
@@ -8,6 +9,8 @@ const useReviewPage = () => {
     const [searchedContents, setSearchedContents] = useState<ContentsType[]|null>(null);
     const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchContents);
     const keywordRef = useRef<HTMLInputElement>(null);
+    const { contentId } = useParams<{contentId: string}>();
+    const navigate = useNavigate();
 
     const fetchSearch = async (e:any) => {
         e.preventDefault();
@@ -26,8 +29,14 @@ const useReviewPage = () => {
         }
     };
 
+    useEffect(() => {
+        if(contentId) {
+            fetchContent(Number(contentId));
+        }
+    }, [contentId]);
+
     const handleContentClick = (contentId: number) => {
-        fetchContent(contentId);
+        navigate(`/reviews/${contentId}`);
     };
 
     const handleRatingChange = (rating: number) => {
@@ -37,7 +46,7 @@ const useReviewPage = () => {
     const addStarRating = async () => {
         if (content) {
             const result = await fetchAddStarRating(content.id, userRating);
-            setContent({ ...content, starRating: result });
+            setContent({ ...content, starRate: result });
         }
     }
 
@@ -55,7 +64,7 @@ const useReviewPage = () => {
                 ...content,
                 reviews: [
                     ...content.reviews,
-                    { id: content.reviews.length + 1, text: textAreaRef.current.value }
+                    textAreaRef.current.value
                 ]
             };
             setContent(updatedContent);

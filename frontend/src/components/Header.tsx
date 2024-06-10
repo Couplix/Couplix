@@ -16,7 +16,7 @@ function Header() {
         <Menu $active={location.pathname === '/'} >
           <Link to={"/"}>Recommend</Link>
         </Menu>
-        <Menu $active={location.pathname === '/reviews'}>
+        <Menu $active={location.pathname.startsWith('/reviews')}>
           <Link to={"/reviews"}>Review</Link>
         </Menu>
       </MenuHeader>
