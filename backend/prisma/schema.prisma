@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String  @unique
+  netflixes Netflix[]
+}
+
 model Netflix {
   id        Int      @id @default(autoincrement())
   type      String
@@ -17,11 +23,11 @@ model Netflix {
   release_year String
   rating      String
   duration    String
-  listed_in   String  @db.Text
   description String  @db.Text
 
   reviews Review[]
   starRating StarRating[]
+  categories Category[]
 }
 
 model Review {
