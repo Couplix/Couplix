@@ -23,5 +23,5 @@ export const addRate = async ({ netflixId, star }: any) => {
     _avg: { star: true }
   });
 
-  return rateAvg;
+  return rateAvg._avg.star;
 }
