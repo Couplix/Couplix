@@ -9,4 +9,9 @@ router.get('/:id', errorCatcher(async (req: Request, res: Response) => {
     res.status(200).json(result);
 }));
 
+router.get('/recommendations', errorCatcher(async (req: Request, res: Response) => {
+    const result = await contentsService.getRecommendContents(req.query);
+    res.status(200).json(result);
+}));
+
 export default router;
