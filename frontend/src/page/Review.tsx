@@ -62,7 +62,7 @@ const Review = () => {
                     <RightAlignedContainer>
                         <BoldSpan>{content.title}</BoldSpan>
                             <StarRating starRating={calculateAverageRating(content.starRating)}/>
-                        <BoldSpan>{calculateAverageRating(content.starRating)}</BoldSpan>
+                        <BoldSpan>{Math.round(calculateAverageRating(content.starRating) * 100) / 100}</BoldSpan>
                     </RightAlignedContainer>
                     <br/>
                     <br/>
