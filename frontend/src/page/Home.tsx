@@ -83,7 +83,7 @@ const Home = () => {
                             <BoldSpan>{v.title}</BoldSpan>
                             <span> ({v.release_year})</span>
                             <br/>
-                            <span>{v.categories}</span>
+                            <span>{v.categories.join(", ")}</span>
                         </div>
                         <span className="material-icons" style={{color:"#33cc88"}}>add_circle</span> 
                     </ContentsList>
@@ -103,7 +103,7 @@ const Home = () => {
                             <BoldSpan>{v.title}</BoldSpan>
                             <span> ({v.release_year})</span>
                             <br/>
-                            <span>{v.categories}</span>
+                            <span>{v.categories.join(", ")}</span>
                         </div>
                         <Link className="material-icons" to={`/review/${v.id}`}>add_circle</Link>
                     </ContentsList>

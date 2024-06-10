@@ -45,7 +45,7 @@ const Review = () => {
                             <BoldSpan>{v.title}</BoldSpan>
                             <span> ({v.release_year})</span>
                             <br/>
-                            <span>{v.categories}</span>
+                            <span>{v.categories.join(", ")}</span>
                         </div>
                     </ContentsList>
                 ))}

@@ -10,7 +10,7 @@ export type ContentsType = {
   release_year: number;
   rating: string;
   duration: string;
-  categories: string;
+  categories: string[];
   description: string;
   starRate: number;
   reviews: string[];
@@ -28,7 +28,7 @@ export let contents: ContentsType[] = [
     country: "미국",
     rating: "12세 이상",
     duration: "143분",
-    categories: ["슈퍼히어로", "SF", "액션", "어드벤처", "판타지"].join(", "),
+    categories: ["슈퍼히어로", "SF", "액션", "어드벤처", "판타지"],
     reviews: ["재밌다", "재밌네요"]
   },
 ]
@@ -50,7 +50,7 @@ export async function searchContents(keyword: string) {
 }
 
 export async function getRecommendContents(user1Data: UserData, user2Data: UserData) {
-  const result = await axios.get<ContentsType[]>("/api/recommend?"+
+  const result = await axios.get<ContentsType[]>("/api/contents/recommendations?"+
     "prefer1="+ user1Data.prefer.join(",") +
     "&prefer2=" + user2Data.prefer.join(",") +
     "&dislike1=" + user1Data.dislike.join(",") +
