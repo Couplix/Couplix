@@ -8,7 +8,6 @@ import StarRatingInput from "@/components/StarRatingInput";
 
 const Review = () => {
     const {
-        error,
         searchedContents,
         loadingUpdate,
         fetchSearch,
@@ -16,10 +15,8 @@ const Review = () => {
         content,
         addStarRating,
         handleContentClick,
-        calculateAverageRating,
         handleRatingChange,
-        inputText,
-        handleInputChange,
+        textAreaRef,
         submitReview
     } = useReviewPage();
 
@@ -54,15 +51,14 @@ const Review = () => {
                         </div>
                     </ContentsList>
                 ))}
-                {error && <div>{error.message}</div>}
             </ContentsListContainer>
             <ContentContainer>
-            {content?.title ? (
+            {content && (
                 <div>
                     <RightAlignedContainer>
                         <BoldSpan>{content.title}</BoldSpan>
-                            <StarRating starRating={calculateAverageRating(content.starRating)}/>
-                        <BoldSpan>{Math.round(calculateAverageRating(content.starRating) * 100) / 100}</BoldSpan>
+                            <StarRating starRating={content.starRating}/>
+                        <BoldSpan>{content.starRating}</BoldSpan>
                     </RightAlignedContainer>
                     <br/>
                     <br/>
@@ -97,8 +93,7 @@ const Review = () => {
                             <ReviewInput
                                 maxLength={500}
                                 placeholder="텍스트를 입력하세요. (500자 이하)"
-                                value={inputText}
-                                onChange={handleInputChange}
+                                ref={textAreaRef}
                             />
                             <ReviewButton onClick={submitReview}>작성하기</ReviewButton>
                         </ReviewInputContainer>
@@ -114,8 +109,6 @@ const Review = () => {
                         ))}
                     </ReviewContainer>
                 </div>
-            ) : (
-                null
             )}
             </ContentContainer>
         </MainContainer>

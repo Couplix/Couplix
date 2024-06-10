@@ -1,19 +1,9 @@
 import { HeaderContainer, MenuHeader, Menu } from '@/styles/Header.style';
 import Logo from '@/assets/logo.png';
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 function Header() {
   const location = useLocation();
-  const [selectedMenu, setSelectedMenu] = useState(Number);
-
-  useEffect(() => {
-    if (location.pathname === '/') {
-      setSelectedMenu(1);
-    } else if (location.pathname === '/reviews') {
-      setSelectedMenu(0);
-    }
-  }, [location]);
 
   return (
     <HeaderContainer>
@@ -23,10 +13,10 @@ function Header() {
         </Link>
       </div>
       <MenuHeader>
-        <Menu $active={selectedMenu === 1}>
+        <Menu $active={location.pathname === '/'} >
           <Link to={"/"}>Recommend</Link>
         </Menu>
-        <Menu $active={selectedMenu === 0}>
+        <Menu $active={location.pathname === '/reviews'}>
           <Link to={"/reviews"}>Review</Link>
         </Menu>
       </MenuHeader>

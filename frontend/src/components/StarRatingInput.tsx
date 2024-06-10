@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Star from '@/assets/star.png';
 import EmptyStar from '@/assets/star-empty.png';
@@ -9,13 +9,13 @@ const StyledStar = styled.img`
     cursor: pointer;
 `;
 
-const StarRatingInput = ({ maxStars = 5 , onRatingChange }) => {
+const StarRatingInput = ({ maxStars = 5 , onRatingChange }: { maxStars?: number; onRatingChange: (rating: number) => void }) => {
     const [currentRating, setCurrentRating] = useState(0);
     const [hoveredRating, setHoveredRating] = useState(0);
 
-    const handleMouseEnter = (index) => setHoveredRating(index + 1);
+    const handleMouseEnter = (index:number) => setHoveredRating(index + 1);
     const handleMouseLeave = () => setHoveredRating(0);
-    const handleClick = (index) => {
+    const handleClick = (index: number) => {
         const rating = index + 1;
         setCurrentRating(rating);
         onRatingChange(rating);

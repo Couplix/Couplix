@@ -1,20 +1,13 @@
 import { useRef, useState } from "react";
 import useFetchUpdate from "./useFetchUpdate";
-import useFetchWithRendering from "./useFetchWithRendering";
-import { ContentsType, contents, getCategories, getContentById, searchContents } from "@/utils/api";
+import { ContentsType, getContentById, searchContents, fetchAddReview, fetchAddStarRating } from "@/utils/api";
 
 const useReviewPage = () => {
-    const [content, setContent] = useState<ContentsType>();
+    const [content, setContent] = useState<ContentsType|null>(null);
     const [userRating, setUserRating] = useState(0);
-    const [loading, categories, error] = useFetchWithRendering(getCategories);
     const [searchedContents, setSearchedContents] = useState<ContentsType[]|null>(null);
     const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchContents);
     const keywordRef = useRef<HTMLInputElement>(null);
-    const [inputText, setInputText] = useState('');
-
-    const handleInputChange = (event) => {
-        setInputText(event.target.value);
-    };
 
     const fetchSearch = async (e:any) => {
         e.preventDefault();
@@ -37,26 +30,22 @@ const useReviewPage = () => {
         fetchContent(contentId);
     };
 
-    const calculateAverageRating = (ratings: number[]) => {
-        if (!ratings || ratings.length === 0) return 0;
-        const sum = ratings.reduce((acc, rating) => acc + rating, 0);
-        return sum / ratings.length;
-    };
-
     const handleRatingChange = (rating: number) => {
         setUserRating(rating);
     };
 
-    const addStarRating = () => {
+    const addStarRating = async () => {
         if (content) {
-            const updatedContent = { ...content, starRating: [...content.starRating, userRating] };
-            setContent(updatedContent);
-            contents[content.id].starRating.push(userRating);
+            const result = await fetchAddStarRating(content.id, userRating);
+            setContent({ ...content, starRating: result });
         }
-    };
+    }
+
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     const submitReview = () => {
-        if (inputText.trim() === '') {
+        if(!textAreaRef.current) return;
+        if (textAreaRef.current.value.trim() === "") {
             console.log("리뷰 내용을 입력하세요.");
             return;
         }
@@ -66,17 +55,14 @@ const useReviewPage = () => {
                 ...content,
                 reviews: [
                     ...content.reviews,
-                    { id: content.reviews.length + 1, text: inputText }
+                    { id: content.reviews.length + 1, text: textAreaRef.current.value }
                 ]
             };
             setContent(updatedContent);
-            contents[content.id].reviews.push({ id: content.reviews.length, text: inputText })
-            setInputText('');
         }
     };
 
     return {
-        error,
         searchedContents,
         loadingUpdate,
         fetchSearch,
@@ -84,10 +70,8 @@ const useReviewPage = () => {
         content,
         addStarRating,
         handleContentClick,
-        calculateAverageRating,
         handleRatingChange,
-        inputText,
-        handleInputChange,
+        textAreaRef,
         submitReview
     };
 }

@@ -8,7 +8,7 @@ const StyledStar = styled.img`
     height: auto; /* 높이를 너비에 맞게 자동으로 조정 */
 `;
 
-function StarRating({ starRating }) {
+function StarRating({ starRating }: { starRating: number }) {
     const maxStars = 5;
     const filledStars = Math.floor(starRating);
     const hasHalfStar = starRating % 1 !== 0;
