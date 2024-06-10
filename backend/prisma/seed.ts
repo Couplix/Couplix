@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import categories from "./category.json";
 import seed from "./netflix.json";
+import embedding from "./embedding.json";
 
 const prisma = new PrismaClient();
 
@@ -31,6 +32,15 @@ async function main() {
             }
         });
     }
+
+    await prisma.embedding.createMany({
+        data: embedding.map((item) => {
+            return {
+                netflixId: item.netflixId,
+                embedding: item.embedding
+            }
+        })
+    });
 }
 
 main()

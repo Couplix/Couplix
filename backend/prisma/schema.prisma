@@ -33,8 +33,15 @@ model Netflix {
 
 model Embedding {
   netflixId Int   @id
-  embedding String  @db.Text
+  embedding Json
   netflix   Netflix  @relation(fields: [netflixId], references: [id])
+}
+
+model Recommendation {
+  originId  Int
+  recommendId Int
+  similarity Float
+  @@id([originId, recommendId])
 }
 
 model Review {
