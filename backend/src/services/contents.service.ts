@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import { ValidationError } from "../errors";
+import { NoResultsError, ValidationError } from "../errors";
 const prisma = new PrismaClient();
 
 export const getContents = async (id: any) => {
     if (!id || typeof id !== 'string' || typeof parseInt(id) !== 'number') {
         throw new ValidationError();
     }
-    const startRateAvg = await prisma.starRating.aggregate({
+    const starRateAvg = await prisma.starRating.aggregate({
         where: { netflixId: parseInt(id) },
         _avg: { star: true }
       });
@@ -24,8 +24,13 @@ export const getContents = async (id: any) => {
         }
     });
 
+    if(!contents) {
+        throw new NoResultsError();
+    }
+
     return {
         ...contents,
-        startRate : startRateAvg._avg.star
+        starRate : starRateAvg._avg.star,
+        reviews: contents.reviews.map(v => v.content)
     };
 }

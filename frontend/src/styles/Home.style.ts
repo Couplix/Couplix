@@ -48,8 +48,8 @@ export const Category = styled.div<{$preferState: preferState}>`
     background-color: ${props => props.$preferState === preferState.prefer ? '#ffc0cb' : props.$preferState === preferState.dislike ? '#ccc' : '#fff'};
     color: ${props => props.$preferState === preferState.prefer ? '#000' : props.$preferState === preferState.dislike ? '#666' : '#000'};
     ${clickable}
-    padding: 5px 10px;
-    width: 130px;
+    padding: 5px 30px 5px 10px;
+    width: fit-content;
     display: flex;
     align-items: center;
     border-radius: 5px;

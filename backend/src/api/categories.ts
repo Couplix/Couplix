@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
   const formattedCategories = categories.map((category, index) => ({
-    categoryId: index + 1,
+    id: index + 1,
     name: category
   }));
   

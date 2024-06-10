@@ -77,7 +77,7 @@ const Home = () => {
                     <ContentsList key={v.id} onClick={addLikeContents(v)}>
                         <div>
                             <BoldSpan>{v.title}</BoldSpan>
-                            <span> ({v.releaseYear})</span>
+                            <span> ({v.release_year})</span>
                             <br/>
                             <span>{v.categories.map((c, index) => (
                                 index === v.categories.length - 1 ? c : c + ", "

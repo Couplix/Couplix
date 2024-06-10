@@ -43,7 +43,7 @@ const Review = () => {
                     <ContentsList key={v.id} onClick={() => handleContentClick(v.id)}>
                         <div>
                             <BoldSpan>{v.title}</BoldSpan>
-                            <span> ({v.releaseYear})</span>
+                            <span> ({v.release_year})</span>
                             <br/>
                             <span>{v.categories.map((c, index) => (
                                 index === v.categories.length - 1 ? c : c + ", "
@@ -57,17 +57,17 @@ const Review = () => {
                 <div>
                     <RightAlignedContainer>
                         <BoldSpan>{content.title}</BoldSpan>
-                            <StarRating starRating={content.starRating}/>
-                        <BoldSpan>{content.starRating}</BoldSpan>
+                            <StarRating starRating={content.starRate}/>
+                        <BoldSpan>{content.starRate}</BoldSpan>
                     </RightAlignedContainer>
                     <br/>
                     <br/>
                     <ContentDescriptionContainer>
-                        <span>감독: {content.director.join(", ")}</span>
+                        <span>감독: {content.director}</span>
                         <br/>
-                        <span>출연: {content.cast.join(", ")}</span>
+                        <span>출연: {content.cast}</span>
                         <br/>
-                        <span>개봉연도: {content.releaseYear}</span>
+                        <span>개봉연도: {content.release_year}</span>
                         <br/>
                         <br/>
                         <span>{content.description}</span>
@@ -100,10 +100,10 @@ const Review = () => {
                         <br />
                         <br />
                         <br />
-                        {content.reviews.map(review => (
-                            <Reviews key={review.id}>
-                                <ReviewId>{review.id}:</ReviewId>
-                                <ReviewText>{review.text}</ReviewText>
+                        {content.reviews.map((review,index) => (
+                            <Reviews key={index+1}>
+                                <ReviewId>{index+1}:</ReviewId>
+                                <ReviewText>{review}</ReviewText>
                                 <br />
                             </Reviews>
                         ))}
