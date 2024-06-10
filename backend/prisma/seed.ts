@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import categories from "./category.json";
-import seed from "./seed.json";
+import seed from "./netflix.json";
 
 const prisma = new PrismaClient();
 

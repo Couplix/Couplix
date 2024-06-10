@@ -28,6 +28,13 @@ model Netflix {
   reviews Review[]
   starRating StarRating[]
   categories Category[]
+  embedding Embedding[]
+}
+
+model Embedding {
+  netflixId Int   @id
+  embedding String  @db.Text
+  netflix   Netflix  @relation(fields: [netflixId], references: [id])
 }
 
 model Review {
