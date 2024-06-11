@@ -1,4 +1,6 @@
 import axios from "axios";
+import { UserData } from "@/hooks/useHomePage";
+
 export type ContentsType = {
   id: number;
   title: string;
@@ -45,6 +47,18 @@ export async function searchContents(keyword: string) {
     { id: 3, title: "어벤져스3", category: "액션, 드라마", releaseYear: 2018, rating: "12세 이상", starRating: 4.5 },
   ]*/
   return contents;
+}
+
+export async function getRecommendContents(user1Data: UserData, user2Data: UserData) {
+  const result = await axios.get<ContentsType[]>("/api/contents/recommendations?"+
+    "prefer1="+ user1Data.prefer.join(",") +
+    "&prefer2=" + user2Data.prefer.join(",") +
+    "&dislike1=" + user1Data.dislike.join(",") +
+    "&dislike2=" + user2Data.dislike.join(",") +
+    "&likeContent1=" + user1Data.likeContents.map(v => v.id).join(",") +
+    "&likeContent2=" + user2Data.likeContents.map(v => v.id).join(",")
+  );
+  return result.data;
 }
 
 export async function getContentById(contentId: Number) {

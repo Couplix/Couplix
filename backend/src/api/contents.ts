@@ -4,9 +4,15 @@ import * as contentsService from '../services/contents.service';
 
 const router = Router();
 
+router.get('/recommendations', errorCatcher(async (req: Request, res: Response) => {
+    const result = await contentsService.getRecommendContents(req.query);
+    res.status(200).json(result);
+}));
+
 router.get('/:id', errorCatcher(async (req: Request, res: Response) => {
     const result = await contentsService.getContents(req.params.id);
     res.status(200).json(result);
 }));
+
 
 export default router;

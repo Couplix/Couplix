@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String  @unique
+  netflixes Netflix[]
+}
+
 model Netflix {
   id        Int      @id @default(autoincrement())
   type      String
@@ -17,11 +23,29 @@ model Netflix {
   release_year String
   rating      String
   duration    String
-  listed_in   String  @db.Text
   description String  @db.Text
 
   reviews Review[]
   starRating StarRating[]
+  categories Category[]
+  embedding Embedding[]
+  recommendationsOrigin Recommendation[] @relation("RecommendationOrigin")
+  recommendationsRecommend Recommendation[] @relation("RecommendationRecommend")
+}
+
+model Embedding {
+  netflixId Int   @id
+  embedding Json
+  netflix   Netflix  @relation(fields: [netflixId], references: [id])
+}
+
+model Recommendation {
+  originId  Int
+  recommendId Int
+  originNetflix Netflix @relation(fields: [originId], references: [id], name: "RecommendationOrigin")
+  recommendNetflix Netflix @relation(fields: [recommendId], references: [id], name: "RecommendationRecommend")
+  similarity Float
+  @@id([originId, recommendId])
 }
 
 model Review {
