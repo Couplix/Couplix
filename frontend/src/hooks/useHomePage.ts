@@ -83,6 +83,7 @@ const useHomePage = () => {
     const canSubmit = user1Data.prefer.length + user1Data.dislike.length > 0 && user2Data.prefer.length + user2Data.dislike.length > 0;
 
     const clickRecommend = async () => {
+        console.log(user1Data, user2Data);
         const data = await fetchRecommend(user1Data, user2Data);
         setRecommendContents(data);
     }

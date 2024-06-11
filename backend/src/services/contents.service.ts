@@ -196,7 +196,7 @@ export const getRecommendContents = async ({prefer1, prefer2, dislike1, dislike2
     const allRecommend = [ ...new Set([...recommendByLikeContent.map(v => v.id),
         ...recommendByOtherLikeContent.map(v => v.id),
         ...recommendByCommonPrefer.map(v => v.id),
-        ...recommendByOtherPrefer.map(v => v.id)])];
+        ...recommendByOtherPrefer.map(v => v.id)])].filter(v => !commonLikeContent.includes(v) && !otherLikeContent.includes(v));
     
     const recommendContents = await prisma.netflix.findMany({
         where: {
@@ -220,9 +220,10 @@ export const getRecommendContents = async ({prefer1, prefer2, dislike1, dislike2
         const otherPreferScore = (recommendByOtherPrefer.find(recommend => recommend.id === v.id)?._count.categories??0)*0.5;
         return {
             ...v,
+            categories: v.categories.map(v => v.name),
             score: likeContentScore + otherLikeContentScore + commonPreferScore + otherPreferScore
         }
     });
 
-    return allRecommendWithScore.sort((a, b) => b.score - a.score);
+    return allRecommendWithScore.sort((a, b) => b.score - a.score).filter((v, i) => i < 100);
 }

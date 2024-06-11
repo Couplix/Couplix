@@ -90,9 +90,9 @@ const Home = () => {
                 ))}
                 {error && <div>{error.message}</div>}
             </ContentsListContainer>
-            {canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:300,margin:"50px auto"}}>추천받기</ButtonWithHoverAnimation>}
+            {canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:300,margin:"50px auto"}} onClick={clickRecommend}>추천받기</ButtonWithHoverAnimation>}
             {!canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:500,margin:"50px auto",flexDirection:"column"}} disabled>
-                <span onClick={clickRecommend}>추천받기</span>
+                <span>추천받기</span>
                 <span style={{fontWeight:"400"}}>각 사용자 별로 최소 1개 이상의 카테고리 선호도를 선택해주세요.</span>
                 </ButtonWithHoverAnimation>}
             {loadingRecommend && <div>추천 중...</div>}
