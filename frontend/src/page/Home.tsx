@@ -98,14 +98,17 @@ const Home = () => {
             {loadingRecommend && <div>추천 중...</div>}
             <ContentsListContainer>
                 {recommendContents && recommendContents.map(v => (
-                    <ContentsList key={v.id}>
+                    <ContentsList key={v.id} style={{userSelect:"auto",cursor:"default"}}>
                         <div>
                             <BoldSpan>{v.title}</BoldSpan>
                             <span> ({v.release_year})</span>
                             <br/>
                             <span>{v.categories.join(", ")}</span>
                         </div>
-                        <Link className="material-icons" to={`/review/${v.id}`}>add_circle</Link>
+                        <Link to={`/reviews/${v.id}`} style={{display:"flex",alignItems:"center",userSelect:"none",cursor:"pointer"}}>
+                        <span> 리뷰 및 정보 보기 </span>
+                        <span className="material-icons">chevron_right</span>
+                        </Link>
                     </ContentsList>
                 ))}
             </ContentsListContainer>
