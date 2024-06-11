@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import categories from "./category.json";
 import seed from "./netflix.json";
 import embedding from "./embedding.json";
+import recommend from "./recommend.json";
 
 const prisma = new PrismaClient();
 
@@ -38,6 +39,16 @@ async function main() {
             return {
                 netflixId: item.netflixId,
                 embedding: item.embedding
+            }
+        })
+    });
+
+    await prisma.recommendation.createMany({
+        data: recommend.map((item) => {
+            return {
+                originId: item.originId,
+                recommendId: item.recommendId,
+                similarity: item.similarity
             }
         })
     });
