@@ -29,6 +29,8 @@ model Netflix {
   starRating StarRating[]
   categories Category[]
   embedding Embedding[]
+  recommendationsOrigin Recommendation[] @relation("RecommendationOrigin")
+  recommendationsRecommend Recommendation[] @relation("RecommendationRecommend")
 }
 
 model Embedding {
@@ -40,6 +42,8 @@ model Embedding {
 model Recommendation {
   originId  Int
   recommendId Int
+  originNetflix Netflix @relation(fields: [originId], references: [id], name: "RecommendationOrigin")
+  recommendNetflix Netflix @relation(fields: [recommendId], references: [id], name: "RecommendationRecommend")
   similarity Float
   @@id([originId, recommendId])
 }
