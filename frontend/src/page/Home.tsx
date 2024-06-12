@@ -26,6 +26,7 @@ const Home = () => {
         setToUser2,
         keywordRef,
         canSubmit,
+        onChangeKeyword,
         clickRecommend,
         loadingRecommend,
         recommendContents
@@ -71,7 +72,7 @@ const Home = () => {
                 ))}
             </CategoriesContainer>
             <SearchContainer>
-                <Input type="text" ref={keywordRef} />
+                <Input type="text" ref={keywordRef} onChange={onChangeKeyword}/>
                 <SearchButton onClick={fetchSearch}>검색</SearchButton>
             </SearchContainer>
             <ContentsListContainer>

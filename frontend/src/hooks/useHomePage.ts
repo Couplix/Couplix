@@ -63,6 +63,12 @@ const useHomePage = () => {
         setUserData({...currentData, likeContents: currentData.likeContents.filter(v => v.id !== id)});
     };
 
+    const onChangeKeyword = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(!e.target.value) return setSearchedContents(null);
+        const data = await fetchUpdate(e.target.value);
+        setSearchedContents(data);
+    }
+
     const fetchSearch = async (e:any) => {
         e.preventDefault();
         if(!keywordRef.current) return;
@@ -100,6 +106,7 @@ const useHomePage = () => {
         rotatePreferState,
         addLikeContents,
         removeLikeContents,
+        onChangeKeyword,
         fetchSearch,
         setToUser1,
         setToUser2,

@@ -17,7 +17,8 @@ const Review = () => {
         handleContentClick,
         handleRatingChange,
         textAreaRef,
-        submitReview
+        submitReview,
+        onChangeKeyword,
     } = useReviewPage();
 
     return (
@@ -33,7 +34,7 @@ const Review = () => {
                 <br/>
             </DescriptionContainer>
             <SearchContainer>
-                <Input type="text" ref={keywordRef} />
+                <Input type="text" ref={keywordRef} onChange={onChangeKeyword} />
                 <SearchButton onClick={fetchSearch}>검색</SearchButton>
             </SearchContainer>
             <ContentsListContainer>

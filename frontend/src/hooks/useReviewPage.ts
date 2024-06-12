@@ -18,6 +18,11 @@ const useReviewPage = () => {
         const data = await fetchUpdate(keywordRef.current.value);
         setSearchedContents(data);
     };
+    const onChangeKeyword = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(!e.target.value) return setSearchedContents(null);
+        const data = await fetchUpdate(e.target.value);
+        setSearchedContents(data);
+    }
 
     const fetchContent = async (contentId: number) => {
         try {
@@ -80,6 +85,7 @@ const useReviewPage = () => {
         addStarRating,
         handleContentClick,
         handleRatingChange,
+        onChangeKeyword,
         textAreaRef,
         submitReview
     };
