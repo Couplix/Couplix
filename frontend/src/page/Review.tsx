@@ -5,6 +5,7 @@ import { SearchContainer, SearchButton, ContentsListContainer,
 import { ContentContainer, ContentDescriptionContainer, ReviewButton, ReviewContainer, ReviewId, ReviewInput, ReviewInputContainer, ReviewText, Reviews, RightAlignedContainer, StarRatingButton, StarRatingContainer } from "@/styles/Review.style";
 import StarRating from "@/components/StarRating";
 import StarRatingInput from "@/components/StarRatingInput";
+import React from "react";
 
 const Review = () => {
     const {
@@ -56,8 +57,14 @@ const Review = () => {
                 <div>
                     <RightAlignedContainer>
                         <BoldSpan>{content.title}</BoldSpan>
-                            <StarRating starRating={content.starRate}/>
-                        <BoldSpan>{content.starRate}</BoldSpan>
+                        {content.starRate === 0 ? (
+                            <span>별점을 매겨주세요.</span>
+                        ) : (
+                            <React.Fragment>
+                                <StarRating starRating={content.starRate}/>
+                                <BoldSpan>{Math.round(content.starRate * 100) / 100}</BoldSpan>
+                            </React.Fragment>
+                        )}
                     </RightAlignedContainer>
                     <br/>
                     <br/>

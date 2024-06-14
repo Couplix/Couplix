@@ -14,12 +14,16 @@ const useReviewPage = () => {
 
     const fetchSearch = async (e:any) => {
         e.preventDefault();
-        if(!keywordRef.current) return;
+        if(!keywordRef.current || !keywordRef.current.value.trim()) {
+            setSearchedContents(null);
+            return;
+        }
         const data = await fetchUpdate(keywordRef.current.value);
         setSearchedContents(data);
     };
+
     const onChangeKeyword = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(!e.target.value) return setSearchedContents(null);
+        if(!e.target.value.trim()) return setSearchedContents(null);
         const data = await fetchUpdate(e.target.value);
         setSearchedContents(data);
     }
@@ -50,16 +54,18 @@ const useReviewPage = () => {
 
     const addStarRating = async () => {
         if (content) {
-            const result = await fetchAddStarRating(content.id, userRating);
-            setContent({ ...content, starRate: result });
+            const updatedStarRate = await fetchAddStarRating(content.id, userRating);
+            const updatedContent = { ...content, starRate: updatedStarRate };
+            setContent(updatedContent);
         }
     }
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-    const submitReview = () => {
-        if(!textAreaRef.current) return;
-        if (textAreaRef.current.value.trim() === "") {
+    const submitReview = async () => {
+        if (!textAreaRef.current) return;
+        const reviewContent = textAreaRef.current.value.trim();
+        if (reviewContent === "") {
             console.log("리뷰 내용을 입력하세요.");
             return;
         }
@@ -67,13 +73,13 @@ const useReviewPage = () => {
         if (content) {
             const updatedContent = {
                 ...content,
-                reviews: [
-                    ...content.reviews,
-                    textAreaRef.current.value
-                ]
+                reviews: [...content.reviews, reviewContent]
             };
             setContent(updatedContent);
+            await fetchAddReview(content.id, reviewContent);
         }
+        
+        textAreaRef.current.value = "";
     };
 
     return {
