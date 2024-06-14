@@ -106,7 +106,7 @@ const Home = () => {
                             <br/>
                             <span>{v.categories.join(", ")}</span>
                         </div>
-                        <Link to={`/reviews/${v.id}`} style={{display:"flex",alignItems:"center",userSelect:"none",cursor:"pointer"}}>
+                        <Link to={`/reviews/${v.id}`} style={{display:"flex",alignItems:"center",userSelect:"none",cursor:"pointer"}} reloadDocument target="_blank">
                         <span> 리뷰 및 정보 보기 </span>
                         <span className="material-icons">chevron_right</span>
                         </Link>
