@@ -27,6 +27,7 @@ const useHomePage = () => {
     });
     const [loading, categories, error] = useFetchWithRendering(getCategories);
     const [searchedContents, setSearchedContents] = useState<ContentsType[]|null>(null);
+    const [searchError, setSearchError] = useState<string|null>(null);
     const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchContents);
     const [loadingRecommend, fetchRecommend] = useFetchUpdate(getRecommendContents);
     const [recommendContents, setRecommendContents] = useState<ContentsType[]|null>(null);
@@ -72,8 +73,12 @@ const useHomePage = () => {
     const fetchSearch = async (e:any) => {
         e.preventDefault();
         if(!keywordRef.current) return;
-        const data = await fetchUpdate(keywordRef.current.value);
-        setSearchedContents(data);
+        try{
+            const data = await fetchUpdate(keywordRef.current.value);
+            setSearchedContents(data);
+        } catch(e) {
+            setSearchError("검색 결과가 없습니다.");
+        }
     };
 
     const setToUser1 = () => {
@@ -100,6 +105,7 @@ const useHomePage = () => {
         error,
         searchedContents,
         loadingUpdate,
+        searchError,
         currentUser,
         currentData,
         getPreferState,

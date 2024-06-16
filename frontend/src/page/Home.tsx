@@ -14,6 +14,7 @@ const Home = () => {
         categories,
         error,
         searchedContents,
+        searchError,
         loadingUpdate,
         currentUser,
         currentData,
@@ -77,8 +78,9 @@ const Home = () => {
             </SearchContainer>
             <ContentsListContainer>
                 {loadingUpdate && <div>검색 중...</div>}
-                {!loadingUpdate && searchedContents === null && <div> 재밌게 시청했던 콘텐츠를 검색해보세요.</div>}
-                {searchedContents && searchedContents.map(v => (
+                {!loadingUpdate && searchError && <div>{searchError}</div>}
+                {!loadingUpdate && !searchError && searchedContents === null && <div> 재밌게 시청했던 콘텐츠를 검색해보세요.</div>}
+                {!loadingUpdate && !searchError && searchedContents && searchedContents.map(v => (
                     <ContentsList key={v.id} onClick={addLikeContents(v)}>
                         <div>
                             <BoldSpan>{v.title}</BoldSpan>
@@ -89,7 +91,6 @@ const Home = () => {
                         <span className="material-icons" style={{color:"#33cc88"}}>add_circle</span> 
                     </ContentsList>
                 ))}
-                {error && <div>{error.message}</div>}
             </ContentsListContainer>
             {canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:300,margin:"50px auto"}} onClick={clickRecommend}>추천받기</ButtonWithHoverAnimation>}
             {!canSubmit && <ButtonWithHoverAnimation style={{width:"100%",maxWidth:500,margin:"50px auto",flexDirection:"column"}} disabled>
