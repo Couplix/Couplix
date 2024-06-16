@@ -3,6 +3,7 @@ import useFetchUpdate from "./useFetchUpdate";
 import useFetchWithRendering from "./useFetchWithRendering";
 import { ContentsType, getCategories,searchContents, getRecommendContents } from "@/utils/api";
 import { preferState } from "@/utils/types";
+import { debounce } from "@/utils/debounce";
 
 export type UserData = {
     prefer: number[];
@@ -64,21 +65,25 @@ const useHomePage = () => {
         setUserData({...currentData, likeContents: currentData.likeContents.filter(v => v.id !== id)});
     };
 
+    const searchByKeyword = debounce(async (keyword: string) => {
+        try{
+            const data = await fetchUpdate(keyword);
+            setSearchedContents(data);
+            setSearchError(null);
+        } catch(e) {
+            setSearchError("검색 결과가 없습니다.");
+        }
+    }, 500);
+
     const onChangeKeyword = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if(!e.target.value) return setSearchedContents(null);
-        const data = await fetchUpdate(e.target.value);
-        setSearchedContents(data);
+        searchByKeyword(e.target.value);
     }
 
     const fetchSearch = async (e:any) => {
         e.preventDefault();
         if(!keywordRef.current) return;
-        try{
-            const data = await fetchUpdate(keywordRef.current.value);
-            setSearchedContents(data);
-        } catch(e) {
-            setSearchError("검색 결과가 없습니다.");
-        }
+        searchByKeyword(keywordRef.current.value);
     };
 
     const setToUser1 = () => {

@@ -2,6 +2,7 @@ import { useRef, useState,useEffect } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import { ContentsType, getContentById, searchContents, fetchAddReview, fetchAddStarRating } from "@/utils/api";
 import { useParams, useNavigate } from "react-router-dom";
+import { debounce } from "@/utils/debounce";
 
 const useReviewPage = () => {
     const [content, setContent] = useState<ContentsType|null>(null);
@@ -13,22 +14,26 @@ const useReviewPage = () => {
     const { contentId } = useParams<{contentId: string}>();
     const navigate = useNavigate();
 
-    const fetchSearch = async (e:any) => {
-        e.preventDefault();
-        if(!keywordRef.current) return;
+    const searchByKeyword = debounce(async (keyword: string) => {
         try{
-            const data = await fetchUpdate(keywordRef.current.value);
+            const data = await fetchUpdate(keyword);
             setSearchedContents(data);
+            setSearchError(null);
         } catch(e) {
             setSearchError("검색 결과가 없습니다.");
         }
-    };
+    }, 500);
 
     const onChangeKeyword = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(!e.target.value.trim()) return setSearchedContents(null);
-        const data = await fetchUpdate(e.target.value);
-        setSearchedContents(data);
+        if(!e.target.value) return setSearchedContents(null);
+        searchByKeyword(e.target.value);
     }
+
+    const fetchSearch = async (e:any) => {
+        e.preventDefault();
+        if(!keywordRef.current) return;
+        searchByKeyword(keywordRef.current.value);
+    };
 
     const fetchContent = async (contentId: number) => {
         try {
