@@ -7,6 +7,7 @@ const useReviewPage = () => {
     const [content, setContent] = useState<ContentsType|null>(null);
     const [userRating, setUserRating] = useState(0);
     const [searchedContents, setSearchedContents] = useState<ContentsType[]|null>(null);
+    const [searchError, setSearchError] = useState<string|null>(null);
     const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchContents);
     const keywordRef = useRef<HTMLInputElement>(null);
     const { contentId } = useParams<{contentId: string}>();
@@ -14,12 +15,13 @@ const useReviewPage = () => {
 
     const fetchSearch = async (e:any) => {
         e.preventDefault();
-        if(!keywordRef.current || !keywordRef.current.value.trim()) {
-            setSearchedContents(null);
-            return;
+        if(!keywordRef.current) return;
+        try{
+            const data = await fetchUpdate(keywordRef.current.value);
+            setSearchedContents(data);
+        } catch(e) {
+            setSearchError("검색 결과가 없습니다.");
         }
-        const data = await fetchUpdate(keywordRef.current.value);
-        setSearchedContents(data);
     };
 
     const onChangeKeyword = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +95,8 @@ const useReviewPage = () => {
         handleRatingChange,
         onChangeKeyword,
         textAreaRef,
-        submitReview
+        submitReview,
+        searchError
     };
 }
 

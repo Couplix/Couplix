@@ -20,6 +20,7 @@ const Review = () => {
         textAreaRef,
         submitReview,
         onChangeKeyword,
+        searchError
     } = useReviewPage();
 
     return (
@@ -40,8 +41,8 @@ const Review = () => {
             </SearchContainer>
             <ContentsListContainer>
                 {loadingUpdate && <div>검색 중...</div>}
-                {!loadingUpdate && searchedContents === null}
-                {searchedContents && searchedContents.map(v => (
+                {!loadingUpdate && searchError && <div>{searchError}</div>}
+                {!loadingUpdate && !searchError &&searchedContents && searchedContents.map(v => (
                     <ContentsList key={v.id} onClick={() => handleContentClick(v.id)}>
                         <div>
                             <BoldSpan>{v.title}</BoldSpan>
