@@ -34,6 +34,7 @@ const useHomePage = () => {
     const [loadingRecommend, fetchRecommend] = useFetchUpdate(getRecommendContents);
     const [recommendContents, setRecommendContents] = useState<ContentsType[]|null>(null);
     const keywordRef = useRef<HTMLInputElement>(null);
+    const urlInputRef = useRef<HTMLInputElement>(null);
 
     const setUserData =  currentUser === 1 ? setUser1Data : setUser2Data;
     const currentData = currentUser === 1 ? user1Data : user2Data;
@@ -138,7 +139,7 @@ const useHomePage = () => {
 
         if (likeContent.length > 0) {
             Promise.all(likeContent.map(id => getContentById(id))).then(data => {
-                const likeContents = data.map((content, index) => ({
+                const likeContents = data.map((content) => ({
                     id: content.id,
                     title: content.title
                 }));
@@ -146,6 +147,35 @@ const useHomePage = () => {
             });
         }
     }, [location.search]);
+
+    const handleURLSearch = () => {
+        if (urlInputRef.current) {
+            const url = urlInputRef.current.value;
+            const urlParams = new URLSearchParams(url);
+    
+            const newPrefer = urlParams.getAll("prefer").map(Number);
+            const newDislike = urlParams.getAll("dislike").map(Number);
+            const newLikeContent = urlParams.getAll("likeContent").map(Number);
+    
+            if (newPrefer.length > 0) {
+                setUserData((prevData) => ({ ...prevData, prefer: newPrefer }));
+            }
+    
+            if (newDislike.length > 0) {
+                setUserData((prevData) => ({ ...prevData, dislike: newDislike }));
+            }
+    
+            if (newLikeContent.length > 0) {
+                Promise.all(newLikeContent.map((id) => getContentById(id))).then((data) => {
+                    const likeContents = data.map((content) => ({
+                        id: content.id,
+                        title: content.title,
+                    }));
+                    setUserData((prevData) => ({ ...prevData, likeContents }));
+                });
+            }
+        }
+    };
 
     return {
         loading,
@@ -168,7 +198,9 @@ const useHomePage = () => {
         canSubmit,
         clickRecommend,
         loadingRecommend,
-        recommendContents
+        recommendContents,
+        handleURLSearch,
+        urlInputRef
     };
 }
 

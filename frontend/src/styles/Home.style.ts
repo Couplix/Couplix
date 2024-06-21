@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import {
-    FlexRowCenter, FlexRowSpaceBetween, FlexRowLeftStart,
-    FlexColumnCenter, FlexColumnLeftStart, FlexColumnStretchCenter,
-    MainColorBackground, ReverseMainColorBackground, clickable, ButtonCss, lightGrayBackground
+    FlexRowCenter, FlexRowSpaceBetween,
+    FlexColumnCenter, MainColorBackground, clickable,
+    ButtonCss
 } from './';
 import { preferState } from "@/utils/types";
 
@@ -102,3 +102,32 @@ export const ContentsList = styled.div`
         background-color: lightgray;
     }
 `;
+
+export const URLSearchContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+`;
+
+export const URLSearchInputContainer = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+`;
+
+export const URLSearchInput = styled.input`
+    width: 50%;
+`;
+
+export const URLSearchButton = styled.button`
+    background-color: var(--main-color);
+    color: white;
+    border: 1px solid var(--main-color);
+    ${FlexRowCenter};
+    ${clickable};
+    padding: 3px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-align: center;
+    width: 5%;
+`

@@ -31,10 +31,6 @@ export const StarRatingButton = styled.button`
     font-align: center;
 `
 
-export const ReviewContainer = styled.div`
-    
-`
-
 export const ReviewInputContainer = styled.div`
     display: flex;
     align-items: flex-start;

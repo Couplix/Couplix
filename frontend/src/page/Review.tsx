@@ -2,7 +2,7 @@ import useReviewPage from "@/hooks/useReviewPage";
 import { Input, MainContainer } from "@/styles";
 import { SearchContainer, SearchButton, ContentsListContainer, 
     ContentsList, BoldSpan, DescriptionContainer } from "@/styles/Home.style";
-import { ContentContainer, ContentDescriptionContainer, ReviewButton, ReviewContainer, ReviewId, ReviewInput, ReviewInputContainer, ReviewText, Reviews, RightAlignedContainer, StarRatingButton, StarRatingContainer } from "@/styles/Review.style";
+import { ContentContainer, ContentDescriptionContainer, ReviewButton, ReviewId, ReviewInput, ReviewInputContainer, ReviewText, Reviews, RightAlignedContainer, StarRatingButton, StarRatingContainer } from "@/styles/Review.style";
 import StarRating from "@/components/StarRating";
 import StarRatingInput from "@/components/StarRatingInput";
 import React from "react";
@@ -85,36 +85,34 @@ const Review = () => {
                         <StarRatingInput onRatingChange={handleRatingChange} />
                         <StarRatingButton onClick={addStarRating}>평점 작성</StarRatingButton>
                     </StarRatingContainer>
-                    <ReviewContainer>
-                        <DescriptionContainer>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <BoldSpan>콘텐츠에 대한 리뷰를 작성해 주세요.</BoldSpan>
-                            <br/>
-                            <span>콘텐츠를 시청하려고 하는 사용자가 시청 전에 확인할 수 있습니다.</span>
-                            <span>다른 사용자를 위해 영화를 평가해 주세요.</span>
-                            <br/>
-                        </DescriptionContainer>
-                        <ReviewInputContainer>
-                            <ReviewInput
-                                maxLength={500}
-                                placeholder="텍스트를 입력하세요. (500자 이하)"
-                                ref={textAreaRef}
-                            />
-                            <ReviewButton onClick={submitReview}>작성하기</ReviewButton>
-                        </ReviewInputContainer>
-                        <br />
-                        <br />
-                        <br />
-                        {content.reviews.map((review,index) => (
-                            <Reviews key={index+1}>
-                                <ReviewId>{index+1}:</ReviewId>
-                                <ReviewText>{review}</ReviewText>
-                                <br />
-                            </Reviews>
-                        ))}
-                    </ReviewContainer>
+                    <DescriptionContainer>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <BoldSpan>콘텐츠에 대한 리뷰를 작성해 주세요.</BoldSpan>
+                        <br/>
+                        <span>콘텐츠를 시청하려고 하는 사용자가 시청 전에 확인할 수 있습니다.</span>
+                        <span>다른 사용자를 위해 영화를 평가해 주세요.</span>
+                        <br/>
+                    </DescriptionContainer>
+                    <ReviewInputContainer>
+                        <ReviewInput
+                            maxLength={500}
+                            placeholder="텍스트를 입력하세요. (500자 이하)"
+                            ref={textAreaRef}
+                        />
+                        <ReviewButton onClick={submitReview}>작성하기</ReviewButton>
+                    </ReviewInputContainer>
+                    <br />
+                    <br />
+                    <br />
+                    {content.reviews.map((review,index) => (
+                        <Reviews key={index+1}>
+                            <ReviewId>{index+1}:</ReviewId>
+                            <ReviewText>{review}</ReviewText>
+                            <br />
+                        </Reviews>
+                    ))}
                 </div>
             )}
             </ContentContainer>
