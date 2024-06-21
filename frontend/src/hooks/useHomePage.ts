@@ -1,10 +1,10 @@
 import { useState,useRef, useEffect } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import useFetchWithRendering from "./useFetchWithRendering";
-import { ContentsType, getCategories,searchContents, getRecommendContents } from "@/utils/api";
+import { ContentsType, getCategories,searchContents, getRecommendContents, getContentById } from "@/utils/api";
 import { preferState } from "@/utils/types";
 import { debounce } from "@/utils/debounce";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export type UserData = {
     prefer: number[];
@@ -119,6 +119,33 @@ const useHomePage = () => {
     useEffect(() => {
         updateQueryParams();
     }, [currentData]);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const prefer = queryParams.getAll("prefer").map(Number);
+        const dislike = queryParams.getAll("dislike").map(Number);
+        const likeContent = queryParams.getAll("likeContent").map(Number);
+
+        if (prefer.length > 0) {
+            setUserData(prev => ({ ...prev, prefer }));
+        }
+
+        if (dislike.length > 0) {
+            setUserData(prev => ({ ...prev, dislike }));
+        }
+
+        if (likeContent.length > 0) {
+            Promise.all(likeContent.map(id => getContentById(id))).then(data => {
+                const likeContents = data.map((content, index) => ({
+                    id: content.id,
+                    title: content.title
+                }));
+                setUserData(prev => ({ ...prev, likeContents }));
+            });
+        }
+    }, [location.search]);
 
     return {
         loading,
