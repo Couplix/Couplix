@@ -68,7 +68,7 @@ const Home = () => {
                 {currentData.likeContents.map(v => (
                     <SelectedContents key={v.id}>
                         {v.title}
-                        <span className="material-icons" onClick={() => { removeLikeContents(v.id); addQuery(); }} style={{color:"var(--main-color)",fontSize:"1rem"}}>cancel</span>
+                        <span className="material-icons" onClick={removeLikeContents(v.id)} style={{color:"var(--main-color)",fontSize:"1rem"}}>cancel</span>
                     </SelectedContents>
                 ))}
             </CategoriesContainer>
