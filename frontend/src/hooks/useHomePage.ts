@@ -1,9 +1,10 @@
-import { useState,useRef } from "react";
+import { useState,useRef, useEffect } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import useFetchWithRendering from "./useFetchWithRendering";
 import { ContentsType, getCategories,searchContents, getRecommendContents } from "@/utils/api";
 import { preferState } from "@/utils/types";
 import { debounce } from "@/utils/debounce";
+import { useNavigate } from 'react-router-dom';
 
 export type UserData = {
     prefer: number[];
@@ -36,6 +37,8 @@ const useHomePage = () => {
 
     const setUserData =  currentUser === 1 ? setUser1Data : setUser2Data;
     const currentData = currentUser === 1 ? user1Data : user2Data;
+
+    const navigate = useNavigate();
 
     const getPreferState = (id: number) => {
         if(currentData.prefer.includes(id)) return preferState.prefer;
@@ -103,6 +106,19 @@ const useHomePage = () => {
         const data = await fetchRecommend(user1Data, user2Data);
         setRecommendContents(data);
     }
+
+    const updateQueryParams = () => {
+        const queryParams = [
+            ...currentData.prefer.map(cat => `prefer=${cat}`),
+            ...currentData.dislike.map(cat => `dislike=${cat}`),
+            ...currentData.likeContents.map(v => `likeContent=${v.id}`)
+        ].join('&');
+        navigate(`/?${queryParams}`);
+    };
+
+    useEffect(() => {
+        updateQueryParams();
+    }, [currentData]);
 
     return {
         loading,
