@@ -46,6 +46,10 @@ export const ReviewInput = styled.textarea`
     height: 100px;
     resize: none;
     border-radius: 5px 0 0 5px;
+    border: none;
+    &:focus {
+        outline: none;
+    }
 `
 
 export const ReviewButton = styled.button`
@@ -53,6 +57,7 @@ export const ReviewButton = styled.button`
     ${ButtonCss};
     height: 100px;
     border-radius: 0 5px 5px 0;
+    word-break: keep-all;
 `
 
 export const Reviews = styled.div`
