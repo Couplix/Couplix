@@ -28,7 +28,7 @@ export async function searchContents(keyword: string) {
 }
 
 export async function getRecommendContents(user1Data: UserData, user2Data: UserData) {
-  const result = await axios.get<ContentsType[]>("/api/contents/recommendations?"+
+  const result = await axios.get<(ContentsType&{score:number})[]>("/api/contents/recommendations?"+
     "prefer1="+ user1Data.prefer.join(",") +
     "&prefer2=" + user2Data.prefer.join(",") +
     "&dislike1=" + user1Data.dislike.join(",") +

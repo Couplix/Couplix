@@ -31,7 +31,8 @@ const useHomePage = () => {
     });
     const [loading, categories, error] = useFetchWithRendering(getCategories);
     const [loadingRecommend, fetchRecommend] = useFetchUpdate(getRecommendContents);
-    const [recommendContents, setRecommendContents] = useState<ContentsType[]|null>(null);
+    const [recommendContents, setRecommendContents] = useState<(ContentsType&{score:number})[]|null>(null);
+    const [page,setPage] = useState(1);
     const urlInputRef = useRef<HTMLInputElement>(null);
 
     const setUserData =  currentUser === 1 ? setUser1Data : setUser2Data;
@@ -82,7 +83,25 @@ const useHomePage = () => {
     const clickRecommend = async () => {
         console.log(user1Data, user2Data);
         const data = await fetchRecommend(user1Data, user2Data);
+        setPage(1);
         setRecommendContents(data);
+    }
+
+    const nextPages = async () => {
+        if(!recommendContents) return;
+        if(page === Math.ceil(recommendContents?.length/10)) return;
+        setPage(page+1);
+    }
+
+    const prevPages = async () => {
+        if(page === 1) return;
+        setPage(page-1);
+    }
+    
+    const setPages = (page:number) => () =>{
+        if(!recommendContents) return;
+        if(page < 1 || page > Math.ceil(recommendContents?.length/10)) return;
+        setPage(page);
     }
 
     const updateQueryParams = () => {
@@ -179,6 +198,10 @@ const useHomePage = () => {
         searchError,
         currentUser,
         currentData,
+        page,
+        nextPages,
+        prevPages,
+        setPages,
         getPreferState,
         shareLink,
         rotatePreferState,

@@ -17,7 +17,8 @@ const Home = () => {
         currentData, getPreferState, shareLink, rotatePreferState, addLikeContents,
         removeLikeContents, fetchSearch, setToUser1, setToUser2, keywordRef,
         canSubmit, onChangeKeyword, clickRecommend, loadingRecommend,
-        recommendContents, handleURLSearch, urlInputRef
+        recommendContents, handleURLSearch, urlInputRef,
+        page,setPages,nextPages,prevPages
     } = useHomePage();
 
     return (
@@ -74,7 +75,7 @@ const Home = () => {
                 <Input type="text" ref={keywordRef} onChange={onChangeKeyword} placeholder="ex) kingdom"></Input>
                 <SearchButton onClick={fetchSearch}>검색</SearchButton>
             </SearchContainer>
-            <ContentsListContainer>
+            <ContentsListContainer  style={{maxHeight: "500px"}}>
                 {loadingUpdate && <div>검색 중...</div>}
                 {!loadingUpdate && searchError && <div>{searchError}</div>}
                 {!loadingUpdate && !searchError && searchedContents === null && <div> 재밌게 시청했던 콘텐츠를 검색해보세요.</div>}
@@ -96,12 +97,15 @@ const Home = () => {
                 <span style={{fontWeight:"400"}}>각 사용자 별로 최소 1개 이상의 카테고리 선호도를 선택해주세요.</span>
                 </ButtonWithHoverAnimation>}
             {loadingRecommend && <div>추천 중...</div>}
-            <ContentsListContainer>
-                {recommendContents && recommendContents.map(v => (
+            {recommendContents && <ContentsListContainer>
+                {recommendContents.length === 0 && <div>추천할 콘텐츠가 없습니다.</div>}
+                {recommendContents.filter((e,i)=>i>(page-1)*10&&i<page*10).map(v => (
                     <ContentsList key={v.id} style={{userSelect:"auto",cursor:"default"}}>
                         <div>
                             <BoldSpan>{v.title}</BoldSpan>
                             <span> ({v.release_year})</span>
+                            <br/>
+                            <span> 추천점수: {v.score}</span>
                             <br/>
                             <span>{v.categories.join(", ")}</span>
                         </div>
@@ -111,7 +115,23 @@ const Home = () => {
                         </Link>
                     </ContentsList>
                 ))}
-            </ContentsListContainer>
+                <div style={{display:"flex",justifyContent:"center",gap:10,alignItems:"center"}}>
+                    {<span className="material-icons" onClick={prevPages} style={{
+                            cursor:"pointer",
+                            userSelect:"none"}}>arrow_back_ios</span>}
+                    {Array.from({length:Math.ceil(recommendContents!.length/10)},
+                        (v,i)=><span key={i} onClick={setPages(i+1)} style={{
+                            cursor:"pointer",
+                            userSelect:"none",
+                            fontWeight:page===i+1?700:400,
+                            fontSize:page===i+1?"1.2rem":"1rem",
+                        }}>{i+1}</span>)
+                    }
+                    {<span className="material-icons" onClick={nextPages} style={{
+                            cursor:"pointer",
+                            userSelect:"none"}}>arrow_forward_ios</span>}
+                </div>
+            </ContentsListContainer>}
         </MainContainer>
     );
 };

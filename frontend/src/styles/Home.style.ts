@@ -87,7 +87,6 @@ export const SearchButton = styled.button`
 export const ContentsListContainer = styled.div`
     ${FlexColumnCenter}
     margin-bottom: 10px;
-    max-height: 500px;
     overflow-y: auto;
     max-width: 700px;
     margin: 0 auto;
