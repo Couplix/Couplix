@@ -14,6 +14,7 @@ export const HeaderContainer = styled.header`
   }
   @media (max-width: 600px){
     flex-direction: column;
+    gap: 10px;
   }
 `;
 
