@@ -167,6 +167,7 @@ const useHomePage = () => {
         }
         const url = window.location.href;
         navigator.clipboard.writeText(url);
+        alert('링크가 복사되었습니다.');
     }
 
     return {

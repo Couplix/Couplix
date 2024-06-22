@@ -27,12 +27,14 @@ const Home = () => {
                 <SelectUser onClick={setToUser2} $active={currentUser === 2}>User2</SelectUser>
             </SelectUserContainer>
             <URLSearchContainer>
-                <div><span>선택 사항 공유하기</span>
-                <span className="material-icons" style={{fontSize:"1.5rem",cursor:"pointer"}} onClick={shareLink}>share</span></div>
-                <BoldSpan>공유받은 URL을 입력해주세요.</BoldSpan>
+                <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10}}>
+                    <BoldSpan>현재 유저 정보 공유하기</BoldSpan>
+                    <span className="material-icons" style={{fontSize:"1.5rem",cursor:"pointer"}} onClick={shareLink}>share</span>
+                </div>
             </URLSearchContainer>
+                <BoldSpan style={{margin:"auto"}}>유저 정보 불러오기</BoldSpan>
             <SearchContainer>
-                <Input type="text" ref={urlInputRef} style={{maxWidth:500}} placeholder="https://couplix.raipen.com/?prefer="></Input>
+                <Input type="text" ref={urlInputRef} style={{maxWidth:500}} placeholder="공유받은 URL ex) https://couplix.raipen.com/?prefer="></Input>
                 <SearchButton onClick={handleURLSearch}>확인</SearchButton>
             </SearchContainer>
             <DescriptionContainer>

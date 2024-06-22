@@ -87,6 +87,11 @@ export const SearchButton = styled.button`
 export const ContentsListContainer = styled.div`
     ${FlexColumnCenter}
     margin-bottom: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 5px;
 `;
 
 export const ContentsList = styled.div`
@@ -94,7 +99,6 @@ export const ContentsList = styled.div`
     ${clickable};
     gap: 10px;
     padding: 10px;
-    border-radius: 5px;
     background-color: #fff;
     color: #000;
     width: 100%;
