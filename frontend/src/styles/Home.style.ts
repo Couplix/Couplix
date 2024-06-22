@@ -30,6 +30,7 @@ export const DescriptionContainer = styled.div`
     ${FlexColumnCenter}
     margin-bottom: 10px;
     gap: 5px;
+    text-align: center;
 `;
 
 export const BoldSpan = styled.span`

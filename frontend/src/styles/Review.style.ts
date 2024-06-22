@@ -1,12 +1,16 @@
 import styled from "styled-components";
-import { FlexRowCenter, clickable, MainColorBackground } from ".";
+import {
+    FlexRowCenter, FlexRowSpaceBetween,
+    FlexColumnCenter, MainColorBackground, clickable,
+    ButtonCss
+} from './';
 
 export const ContentContainer = styled.div`
-    margin: 0 5rem;
+    ${FlexColumnCenter};
 `;
 
 export const ContentDescriptionContainer = styled.div`
-    margin: 0 1rem;
+    margin-left: 1rem;
 `;
 
 export const RightAlignedContainer = styled.div`
@@ -41,19 +45,14 @@ export const ReviewInput = styled.textarea`
     overflow-y: scroll;
     height: 100px;
     resize: none;
+    border-radius: 5px 0 0 5px;
 `
 
 export const ReviewButton = styled.button`
-    background-color: var(--main-color);
-    color: white;
-    border: 1px solid var(--main-color);
-    ${FlexRowCenter};
-    ${clickable};
-    padding: 5px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    font-align: center;
-    width: 10%;
+    ${MainColorBackground};
+    ${ButtonCss};
+    height: 100px;
+    border-radius: 0 5px 5px 0;
 `
 
 export const Reviews = styled.div`

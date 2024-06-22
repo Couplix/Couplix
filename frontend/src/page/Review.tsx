@@ -36,7 +36,7 @@ const Review = () => {
                 <br/>
             </DescriptionContainer>
             <SearchContainer>
-                <Input type="text" ref={keywordRef} onChange={onChangeKeyword} />
+                <Input type="text" ref={keywordRef} onChange={onChangeKeyword} placeholder="kingdom"/>
                 <SearchButton onClick={fetchSearch}>검색</SearchButton>
             </SearchContainer>
             <ContentsListContainer>
@@ -85,10 +85,10 @@ const Review = () => {
                         <StarRatingInput onRatingChange={handleRatingChange} />
                         <StarRatingButton onClick={addStarRating}>평점 작성</StarRatingButton>
                     </StarRatingContainer>
+                    <br/>
+                    <br/>
+                    <br/>
                     <DescriptionContainer>
-                        <br/>
-                        <br/>
-                        <br/>
                         <BoldSpan>콘텐츠에 대한 리뷰를 작성해 주세요.</BoldSpan>
                         <br/>
                         <span>콘텐츠를 시청하려고 하는 사용자가 시청 전에 확인할 수 있습니다.</span>
@@ -103,8 +103,6 @@ const Review = () => {
                         />
                         <ReviewButton onClick={submitReview}>작성하기</ReviewButton>
                     </ReviewInputContainer>
-                    <br />
-                    <br />
                     <br />
                     {content.reviews.map((review,index) => (
                         <Reviews key={index+1}>

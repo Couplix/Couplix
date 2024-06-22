@@ -1,43 +1,18 @@
 import { useRef, useState,useEffect } from "react";
-import useFetchUpdate from "./useFetchUpdate";
-import { ContentsType, getContentById, searchContents, fetchAddReview, fetchAddStarRating } from "@/utils/api";
+import { ContentsType, getContentById, fetchAddReview, fetchAddStarRating } from "@/utils/api";
 import { useParams, useNavigate } from "react-router-dom";
-import { debounce } from "@/utils/debounce";
+import useSearch from "./useSearch";
 
 const useReviewPage = () => {
     const [content, setContent] = useState<ContentsType|null>(null);
-    const [userRating, setUserRating] = useState(0);
-    const [searchedContents, setSearchedContents] = useState<ContentsType[]|null>(null);
-    const [searchError, setSearchError] = useState<string|null>(null);
-    const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchContents);
-    const keywordRef = useRef<HTMLInputElement>(null);
+    const [userRating, setUserRating] = useState(1);
+    const { loadingUpdate, searchedContents, searchError, keywordRef, clearSearch, onChangeKeyword, fetchSearch } = useSearch();
     const { contentId } = useParams<{contentId: string}>();
     const navigate = useNavigate();
 
-    const searchByKeyword = debounce(async (keyword: string) => {
-        try{
-            const data = await fetchUpdate(keyword);
-            setSearchedContents(data);
-            setSearchError(null);
-        } catch(e) {
-            setSearchError("검색 결과가 없습니다.");
-        }
-    }, 500);
-
-    const onChangeKeyword = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(!e.target.value) return setSearchedContents(null);
-        searchByKeyword(e.target.value);
-    }
-
-    const fetchSearch = async (e:any) => {
-        e.preventDefault();
-        if(!keywordRef.current) return;
-        searchByKeyword(keywordRef.current.value);
-    };
-
     const fetchContent = async (contentId: number) => {
         try {
-            setSearchedContents(null);
+            clearSearch();
             const data = await getContentById(contentId);
             setContent(data);
         } catch (error) {
