@@ -151,7 +151,7 @@ const useHomePage = () => {
     const handleURLSearch = () => {
         if (urlInputRef.current) {
             const url = urlInputRef.current.value;
-            const urlParams = new URLSearchParams(url);
+            const urlParams = new URLSearchParams(url.split("?")[1]);
     
             const newPrefer = urlParams.getAll("prefer").map(Number);
             const newDislike = urlParams.getAll("dislike").map(Number);
