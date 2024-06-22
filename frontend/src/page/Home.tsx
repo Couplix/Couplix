@@ -14,29 +14,12 @@ import { SelectUserContainer,SelectUser,
 
 const Home = () => {
     const {
-        loading,
-        categories,
-        error,
-        searchedContents,
-        searchError,
-        loadingUpdate,
-        currentUser,
-        currentData,
-        getPreferState,
-        rotatePreferState,
-        addLikeContents,
-        removeLikeContents,
-        fetchSearch,
-        setToUser1,
-        setToUser2,
-        keywordRef,
-        canSubmit,
-        onChangeKeyword,
-        clickRecommend,
-        loadingRecommend,
-        recommendContents,
-        handleURLSearch,
-        urlInputRef
+        loading, categories, error,
+        searchedContents, searchError, loadingUpdate, currentUser,
+        currentData, getPreferState, shareLink, rotatePreferState, addLikeContents,
+        removeLikeContents, fetchSearch, setToUser1, setToUser2, keywordRef,
+        canSubmit, onChangeKeyword, clickRecommend, loadingRecommend,
+        recommendContents, handleURLSearch, urlInputRef
     } = useHomePage();
 
     return (
@@ -46,6 +29,7 @@ const Home = () => {
                 <SelectUser onClick={setToUser2} $active={currentUser === 2}>User2</SelectUser>
             </SelectUserContainer>
             <URLSearchContainer>
+                <span className="material-icons" style={{fontSize:"1.5rem",cursor:"pointer"}} onClick={shareLink}>share</span>
                 <BoldSpan>공유받은 URL을 입력해주세요.</BoldSpan>
                 <br/>
                 <URLSearchInputContainer>

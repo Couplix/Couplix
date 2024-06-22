@@ -1,9 +1,9 @@
 import { useState,useRef, useEffect } from "react";
 import useFetchUpdate from "./useFetchUpdate";
 import useFetchWithRendering from "./useFetchWithRendering";
-import { ContentsType, getCategories,searchContents, getRecommendContents, getContentById } from "@/utils/api";
+import { ContentsType, getCategories, getRecommendContents, getContentById } from "@/utils/api";
 import { preferState } from "@/utils/types";
-import { debounce } from "@/utils/debounce";
+import useSearch from "./useSearch";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export type UserData = {
@@ -16,6 +16,8 @@ export type UserData = {
 };
 
 const useHomePage = () => {
+    const { loadingUpdate, searchedContents, searchError, keywordRef, clearSearch, onChangeKeyword, fetchSearch } = useSearch();
+
     const [currentUser, setCurrentUser] = useState<1|2>(1);
     const [user1Data, setUser1Data] = useState<UserData>({
         prefer: [],
@@ -28,12 +30,8 @@ const useHomePage = () => {
         likeContents: []
     });
     const [loading, categories, error] = useFetchWithRendering(getCategories);
-    const [searchedContents, setSearchedContents] = useState<ContentsType[]|null>(null);
-    const [searchError, setSearchError] = useState<string|null>(null);
-    const [loadingUpdate, fetchUpdate] = useFetchUpdate(searchContents);
     const [loadingRecommend, fetchRecommend] = useFetchUpdate(getRecommendContents);
     const [recommendContents, setRecommendContents] = useState<ContentsType[]|null>(null);
-    const keywordRef = useRef<HTMLInputElement>(null);
     const urlInputRef = useRef<HTMLInputElement>(null);
 
     const setUserData =  currentUser === 1 ? setUser1Data : setUser2Data;
@@ -62,42 +60,21 @@ const useHomePage = () => {
     const addLikeContents = ({id,title}: ContentsType) => () => {
         if(currentData.likeContents.some(v => v.id === id)) return alert('이미 추가된 컨텐츠입니다.');
         setUserData({...currentData, likeContents: [...currentData.likeContents, {id, title}]});
-        setSearchedContents(null);
+        clearSearch();
     };
 
     const removeLikeContents = (id: number) => () => {
         setUserData({...currentData, likeContents: currentData.likeContents.filter(v => v.id !== id)});
     };
 
-    const searchByKeyword = debounce(async (keyword: string) => {
-        try{
-            const data = await fetchUpdate(keyword);
-            setSearchedContents(data);
-            setSearchError(null);
-        } catch(e) {
-            setSearchError("검색 결과가 없습니다.");
-        }
-    }, 500);
-
-    const onChangeKeyword = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(!e.target.value) return setSearchedContents(null);
-        searchByKeyword(e.target.value);
-    }
-
-    const fetchSearch = async (e:any) => {
-        e.preventDefault();
-        if(!keywordRef.current) return;
-        searchByKeyword(keywordRef.current.value);
-    };
-
     const setToUser1 = () => {
         setCurrentUser(1);
-        setSearchedContents(null);
+        clearSearch();
     };
 
     const setToUser2 = () => {
         setCurrentUser(2);
-        setSearchedContents(null);
+        clearSearch();
     };
 
     const canSubmit = user1Data.prefer.length + user1Data.dislike.length > 0 && user2Data.prefer.length + user2Data.dislike.length > 0;
@@ -177,6 +154,15 @@ const useHomePage = () => {
         }
     };
 
+    const shareLink = () => {
+        if(!navigator.canShare) return alert('공유 기능을 지원하지 않는 브라우저입니다.');
+        navigator.share({
+            title: '컨텐츠 추천 링크',
+            text: '컨텐츠 추천을 받아보세요!',
+            url: window.location.href
+        });
+    }
+
     return {
         loading,
         categories,
@@ -187,6 +173,7 @@ const useHomePage = () => {
         currentUser,
         currentData,
         getPreferState,
+        shareLink,
         rotatePreferState,
         addLikeContents,
         removeLikeContents,
