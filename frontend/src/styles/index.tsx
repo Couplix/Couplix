@@ -179,6 +179,7 @@ export const Input = styled.input`
   border-radius: 5px 0 0 5px;
   flex-grow: 1;
   max-width: 300px;
+  height: 39px;
   &:focus {
     outline: none;
   }
