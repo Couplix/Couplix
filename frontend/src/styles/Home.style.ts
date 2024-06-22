@@ -80,7 +80,8 @@ export const SearchContainer = styled.form`
 export const SearchButton = styled.button`
     ${ButtonCss}
     ${MainColorBackground}
-    padding: 8px 10px;
+    padding: 6.5px 10px;
+    border-radius: 0 5px 5px 0;
 `;
 
 export const ContentsListContainer = styled.div`
@@ -109,25 +110,6 @@ export const URLSearchContainer = styled.div`
     text-align: center;
 `;
 
-export const URLSearchInputContainer = styled.div`
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-`;
-
 export const URLSearchInput = styled.input`
     width: 50%;
 `;
-
-export const URLSearchButton = styled.button`
-    background-color: var(--main-color);
-    color: white;
-    border: 1px solid var(--main-color);
-    ${FlexRowCenter};
-    ${clickable};
-    padding: 3px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    font-align: center;
-    width: 5%;
-`

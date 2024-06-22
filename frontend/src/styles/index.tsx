@@ -175,13 +175,12 @@ export const LoginContainer = styled.form`
 
 export const Input = styled.input`
   padding: 10px;
-  border: 1px solid var(--main-color);
-  border-radius: 5px;
+  border: none;
+  border-radius: 5px 0 0 5px;
   flex-grow: 1;
   max-width: 300px;
   &:focus {
     outline: none;
-    border: 1px solid var(--main-color);
   }
 `;
 

@@ -155,12 +155,18 @@ const useHomePage = () => {
     };
 
     const shareLink = () => {
-        if(!navigator.canShare) return alert('공유 기능을 지원하지 않는 브라우저입니다.');
-        navigator.share({
-            title: '컨텐츠 추천 링크',
-            text: '컨텐츠 추천을 받아보세요!',
-            url: window.location.href
-        });
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if(isMobile){
+            if(!navigator.canShare) return alert('공유 기능을 지원하지 않는 브라우저입니다.');
+            navigator.share({
+                title: '컨텐츠 추천 링크',
+                text: '컨텐츠 추천을 받아보세요!',
+                url: window.location.href
+            });
+            return;
+        }
+        const url = window.location.href;
+        navigator.clipboard.writeText(url);
     }
 
     return {

@@ -7,8 +7,6 @@ import { SelectUserContainer,SelectUser,
     ContentsListContainer, ContentsList,
     URLSearchInput,
     URLSearchContainer,
-    URLSearchInputContainer,
-    URLSearchButton
  } from "@/styles/Home.style";
  import { Link } from "react-router-dom";
 
@@ -29,14 +27,14 @@ const Home = () => {
                 <SelectUser onClick={setToUser2} $active={currentUser === 2}>User2</SelectUser>
             </SelectUserContainer>
             <URLSearchContainer>
-                <span className="material-icons" style={{fontSize:"1.5rem",cursor:"pointer"}} onClick={shareLink}>share</span>
+                <div><span>선택 사항 공유하기</span>
+                <span className="material-icons" style={{fontSize:"1.5rem",cursor:"pointer"}} onClick={shareLink}>share</span></div>
                 <BoldSpan>공유받은 URL을 입력해주세요.</BoldSpan>
-                <br/>
-                <URLSearchInputContainer>
-                    <URLSearchInput type="text" ref={urlInputRef}></URLSearchInput>
-                    <URLSearchButton onClick={handleURLSearch}>확인</URLSearchButton>
-                </URLSearchInputContainer>
             </URLSearchContainer>
+            <SearchContainer>
+                <Input type="text" ref={urlInputRef} style={{maxWidth:500}} placeholder="https://couplix.raipen.com/?prefer="></Input>
+                <SearchButton onClick={handleURLSearch}>확인</SearchButton>
+            </SearchContainer>
             <DescriptionContainer>
                 <BoldSpan>선호/기피하는 카테고리들을 골라주세요.</BoldSpan>
                 <BoldSpan>선택한 장르의 콘텐츠가 더 많이 추천됩니다.</BoldSpan>
@@ -71,7 +69,7 @@ const Home = () => {
                 ))}
             </CategoriesContainer>
             <SearchContainer>
-                <Input type="text" ref={keywordRef} onChange={onChangeKeyword}/>
+                <Input type="text" ref={keywordRef} onChange={onChangeKeyword} placeholder="ex) kingdom"></Input>
                 <SearchButton onClick={fetchSearch}>검색</SearchButton>
             </SearchContainer>
             <ContentsListContainer>
