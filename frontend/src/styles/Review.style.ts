@@ -10,7 +10,7 @@ export const ContentContainer = styled.div`
 `;
 
 export const ContentDescriptionContainer = styled.div`
-    margin-left: 1rem;
+    margin-left: 0.5rem;
 `;
 
 export const RightAlignedContainer = styled.div`

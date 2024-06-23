@@ -70,11 +70,14 @@ const Review = () => {
                     <br/>
                     <br/>
                     <ContentDescriptionContainer>
-                        <span>감독: {content.director}</span>
+                        <BoldSpan>감독: </BoldSpan>
+                        <span>{content.director}</span>
                         <br/>
-                        <span>출연: {content.cast}</span>
+                        <BoldSpan>출연: </BoldSpan>
+                        <span>{content.cast}</span>
                         <br/>
-                        <span>개봉연도: {content.release_year}</span>
+                        <BoldSpan>개봉연도: </BoldSpan>
+                        <span>{content.release_year}</span>
                         <br/>
                         <br/>
                         <span>{content.description}</span>
