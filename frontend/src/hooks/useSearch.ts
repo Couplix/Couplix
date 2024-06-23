@@ -33,7 +33,6 @@ const useSearch = () => {
     const clearSearch = () => {
         setSearchedContents(null);
         if(keywordRef.current) keywordRef.current.value = "";
-        if(keywordRef.current) keywordRef.current.focus();
     }
     
     return { loadingUpdate, searchedContents, searchError, keywordRef, clearSearch, onChangeKeyword, fetchSearch };

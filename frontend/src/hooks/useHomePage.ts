@@ -62,6 +62,7 @@ const useHomePage = () => {
         if(currentData.likeContents.some(v => v.id === id)) return alert('이미 추가된 컨텐츠입니다.');
         setUserData({...currentData, likeContents: [...currentData.likeContents, {id, title}]});
         clearSearch();
+        if(keywordRef.current) keywordRef.current.focus();
     };
 
     const removeLikeContents = (id: number) => () => {
