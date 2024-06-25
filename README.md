@@ -43,8 +43,8 @@ Couplix
 5. ```backend``` 폴더에서 다음 명령어 실행
     ```shell
     npm install
-    npx run prisma
-    npx run seed #만약 2. 과정에서 데이터베이스를 생성하지 않았다면 위 명령어 실행 과정에서 자동으로 seed 까지 실행되므로 이 명령어는 실행하지 않아도 됩니다.
+    npm run prisma
+    npm run seed #만약 2. 과정에서 데이터베이스를 생성하지 않았다면 위 명령어 실행 과정에서 자동으로 seed 까지 실행되므로 이 명령어는 실행하지 않아도 됩니다.
     npm run dev
     ```
 6. ```frontend``` 폴더에서 다음 명령어 실행
@@ -84,8 +84,8 @@ Couplix
     - ```backend``` 폴더에서 다음 명령어 실행
         ```shell
         npm install
-        npx run prisma
-        npx run seed
+        npm run prisma
+        npm run seed
         ```
 2. OpenAI API Key 발급
     - [OpenAI](https://platform.openai.com/)에 가입
