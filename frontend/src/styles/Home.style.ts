@@ -73,7 +73,7 @@ export const SelectedContents = styled.div`
     padding: 5px 5px 5px 10px;
 `;
 
-export const SearchContainer = styled.form`
+export const SearchContainer = styled.div`
     ${FlexRowCenter}
     margin-bottom: 10px;
 `;
