@@ -33,9 +33,7 @@ Couplix
 1. Node.js 및 npm 설치
 2. 데이터베이스 설치
     - MySQL or MariaDB 설치
-    - 데이터베이스 생성
-    - 데이터베이스 사용자 생성
-    - 데이터베이스 사용자에게 데이터베이스 권한 부여
+    - 데이터베이스 스키마 생성
 3. ```backend``` 폴더에 ```.env``` 파일 생성
 4. ```.env``` 파일에 다음과 같이 환경 변수 설정
     ```shell
@@ -45,8 +43,8 @@ Couplix
 5. ```backend``` 폴더에서 다음 명령어 실행
     ```shell
     npm install
-    npx prisma migrate dev #만약 2. 과정에서 데이터베이스를 생성하지 않았다면 자동으로 데이터베이스 생성과 함께 시드 데이터가 추가되므로 아래 명령어는 실행하지 않아도 됩니다.
-    npx prisma db seed #만약 2. 과정에서 데이터베이스를 생성하지 않았다면 위 명령어 실행 과정에서 자동으로 실행되므로 이 명령어는 실행하지 않아도 됩니다.
+    npx run prisma
+    npx run seed #만약 2. 과정에서 데이터베이스를 생성하지 않았다면 위 명령어 실행 과정에서 자동으로 seed 까지 실행되므로 이 명령어는 실행하지 않아도 됩니다.
     npm run dev
     ```
 6. ```frontend``` 폴더에서 다음 명령어 실행
@@ -63,7 +61,7 @@ Couplix
     DATABASE_URL="mysql://root:root@db/couplix"
     NODE_ENV=production
     ```
-4. 루트 폴더에서 다음 명령어 실행
+4. **루트 폴더**에서 다음 명령어 실행
     ```shell
     docker-compose up -d
     #도커 설치 방식에 따라 docker compose up -d를 사용해야할 수도 있음
@@ -86,8 +84,8 @@ Couplix
     - ```backend``` 폴더에서 다음 명령어 실행
         ```shell
         npm install
-        npx prisma migrate dev
-        npx prisma db seed
+        npx run prisma
+        npx run seed
         ```
 2. OpenAI API Key 발급
     - [OpenAI](https://platform.openai.com/)에 가입
